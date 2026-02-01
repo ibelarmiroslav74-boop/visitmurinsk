@@ -2,244 +2,138 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<title>MURINSK</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- Minecraft шрифт -->
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<title>Visit Murinsk</title>
 
 <style>
-:root {
-    --bg:#f5f5f7; 
-    --text:#1d1d1f; 
-    --subtext:#6e6e73; 
-    --card:#ffffff; 
-    --blur-bg:rgba(255,255,255,0.6); 
-    --shadow:rgba(0,0,0,0.1);
+:root{
+  --bg:#0f0f14;
+  --card:#1a1a22;
+  --text:#ffffff;
+  --muted:#a0a0b0;
+  --shadow:rgba(0,0,0,0.5);
 }
-body.dark {
-    --bg:#0d0d0f; 
-    --text:#f5f5f7; 
-    --subtext:#a1a1a6; 
-    --card:#1c1c1e; 
-    --blur-bg:rgba(30,30,32,0.6); 
-    --shadow:rgba(0,0,0,0.5);
+
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:Arial, Helvetica, sans-serif;
 }
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Press Start 2P', monospace; background:var(--bg); color:var(--text); transition:0.4s;}
+
+body{
+  background:var(--bg);
+  color:var(--text);
+}
+
+/* ===== HEADER ===== */
 header{
-    position:fixed;
-    top:0;
-    width:100%;
-    padding:14px 40px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    background:var(--blur-bg);
-    backdrop-filter:saturate(180%) blur(0px);
-    -webkit-backdrop-filter:saturate(180%) blur(0px);
-    transition:all 0.35s ease;
-    z-index:1000;
-}
-header.scrolled{
-    backdrop-filter:saturate(180%) blur(20px);
-    -webkit-backdrop-filter:saturate(180%) blur(20px);
-    box-shadow:0 1px 0 var(--shadow);
-}
-.logo-block{
-    display:flex;
-    align-items:center;
-    gap:12px;
-}
-.logo-block svg{
-    width:60px;
-    height:60px;
-}
-.logo-text{display:flex;flex-direction:column;line-height:1;}
-.logo-text strong{font-family:'Press Start 2P', monospace;font-weight:normal;}
-.logo-text span{font-size:11px;letter-spacing:2px;color:var(--subtext);margin-top:4px;}
-
-.nav-controls{
-    display:flex;
-    align-items:center;
-    gap:16px;
-    position:relative;
+  height:56px;               /* МЕНЬШЕ */
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 20px;
+  background:#111;
+  position:relative;
 }
 
-/* Кнопки переключения */
-#themeBtn, #langBtn{
-    background:none;
-    border:none;
-    color:var(--text);
-    font-size:16px;
-    cursor:pointer;
-    padding:8px 14px;
-    border-radius:10px;
-    transition:0.2s;
+.logo{
+  font-size:16px;
+  font-weight:600;
+  letter-spacing:1px;
 }
-#themeBtn:hover, #langBtn:hover{opacity:0.8;}
 
-/* Гамбургер */
-#menuBtn{
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    width:28px;
-    height:20px;
-    cursor:pointer;
+.menu-btn{
+  cursor:pointer;
+  font-size:20px;
 }
-#menuBtn span{
-    display:block;
-    height:4px;
-    background:var(--text);
-    border-radius:2px;
-    transition:0.3s;
-}
-#menuBtn.open span:nth-child(1){transform:rotate(45deg) translate(5px,5px);}
-#menuBtn.open span:nth-child(2){transform:rotate(-45deg) translate(5px,-5px);}
 
-/* Меню dropdown */
+/* ===== MENU ===== */
 #menuDropdown{
-    position:absolute;
-    top:50px;
-    right:0;
-    background:var(--card);
-    border-radius:16px;
-    padding:16px;
-    display:flex;
-    flex-direction:column;
-    gap:12px;
-    box-shadow:0 10px 30px var(--shadow);
-    min-width:160px;
-    z-index:999;
-    opacity:0;
-    transform:translateY(-10px);
-    pointer-events:none;
-    transition:0.25s ease;
+  position:absolute;
+  top:56px;
+  right:16px;
+  background:var(--card);
+  border-radius:18px;
+  padding:20px;
+  display:flex;
+  flex-direction:column;
+  gap:16px;
+  box-shadow:0 16px 40px var(--shadow);
+  min-width:220px;
+  opacity:0;
+  transform:translateY(-8px);
+  pointer-events:none;
+  transition:0.25s ease;
 }
-#menuDropdown.show{
-    opacity:1;
-    transform:translateY(0);
-    pointer-events:auto;
-}
-#menuDropdown a{color:var(--text);text-decoration:none;font-size:12px;}
-#menuDropdown a:hover{opacity:0.7;}
 
-/* Main content */
-main{padding-top:140px;}
-section{max-width:1000px;margin:80px auto;padding:0 20px;}
-section h2{font-size:24px;margin-bottom:20px;}
-section p{font-size:10px;max-width:720px;margin-bottom:20px;color:var(--subtext);}
-.image-block{margin-top:40px;}
-.image-block img{width:100%;border-radius:20px;box-shadow:0 20px 40px var(--shadow);display:block;}
-footer{text-align:center;padding:40px;font-size:10px;color:var(--subtext);}
-
-/* Адаптив */
-@media (max-width:768px){
-    header{padding:10px 20px;}
-    section h2{font-size:20px;}
-    section p{font-size:9px;}
+#menuDropdown.active{
+  opacity:1;
+  transform:translateY(0);
+  pointer-events:auto;
 }
-@media (max-width:480px){
-    header{flex-direction:row;justify-content:space-between;}
+
+#menuDropdown a{
+  color:var(--text);
+  text-decoration:none;
+  font-size:15px;
+}
+
+/* ===== CONTENT ===== */
+main{
+  padding:32px 20px;
+}
+
+.block{
+  background:var(--card);
+  border-radius:24px;
+  padding:32px;
+  max-width:900px;
+  margin:auto;
+}
+
+.block h1{
+  font-size:26px;
+  margin-bottom:14px;
+}
+
+.block p{
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.6;
 }
 </style>
 </head>
+
 <body>
 
-<header id="header">
-    <div class="logo-block">
-        <!-- Цветной логотип -->
-        <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="15" cy="30" r="12" fill="#ff4c4c"/>
-            <rect x="28" y="8" width="12" height="44" fill="#4cff4c"/>
-            <polygon points="50,0 60,30 50,60" fill="#4c4cff"/>
-        </svg>
-        <div class="logo-text">
-            <strong>CITY</strong>
-            <span>MURINSK</span>
-        </div>
-    </div>
+<header>
+  <div class="logo">VISIT MURINSK</div>
+  <div class="menu-btn" onclick="toggleMenu()">☰</div>
 
-    <div class="nav-controls">
-        <!-- Язык -->
-        <button id="langBtn" aria-label="Change language">RU</button>
-
-        <!-- Переключение темы с современной иконкой -->
-        <button id="themeBtn" aria-label="Toggle theme">☀️</button>
-
-        <!-- Гамбургер -->
-        <div id="menuBtn">
-            <span></span>
-            <span></span>
-        </div>
-
-        <!-- Dropdown меню -->
-        <div id="menuDropdown">
-            <a data-i18n="overview"></a>
-            <a data-i18n="architecture"></a>
-            <a data-i18n="gallery"></a>
-        </div>
-    </div>
+  <div id="menuDropdown">
+    <a href="https://visitmurinsk.ru">Главная</a>
+    <a href="https://history.visitmurinsk.ru">История</a>
+    <a href="https://gallery.visitmurinsk.ru">Галерея</a>
+    <a href="https://review.visitmurinsk.ru">Оставить отзыв</a>
+  </div>
 </header>
 
 <main>
-<section>
-    <h2 data-i18n="title1"></h2>
-    <p data-i18n="text1"></p>
-    <p data-i18n="text2"></p>
-    <div class="image-block">
-        <img loading="lazy" src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000" alt="Город Murinsk">
-    </div>
-</section>
-
-<section>
-    <h2 data-i18n="title2"></h2>
-    <p data-i18n="text3"></p>
-    <div class="image-block">
-        <img loading="lazy" src="https://images.unsplash.com/photo-1494526585095-c41746248156" alt="Дизайн города">
-    </div>
-</section>
+  <div class="block">
+    <h1>Название страницы</h1>
+    <p>
+      Здесь меняется только контент.
+      Шапка и меню остаются одинаковыми
+      на всех страницах сайта.
+    </p>
+  </div>
 </main>
 
-<footer data-i18n="footer"></footer>
-
 <script>
-// Header blur
-const header=document.getElementById('header');
-window.addEventListener('scroll',()=>{header.classList.toggle('scrolled',window.scrollY>40);});
-
-// Theme toggle
-const themeBtn=document.getElementById('themeBtn');
-themeBtn.onclick=()=>{document.body.classList.toggle('dark');themeBtn.textContent=document.body.classList.contains('dark')?'🌙':'☀️';};
-
-// Гамбургер меню
-const menuBtn=document.getElementById('menuBtn');
-const menuDropdown=document.getElementById('menuDropdown');
-menuBtn.onclick=()=>{
-    menuDropdown.classList.toggle('show');
-    menuBtn.classList.toggle('open');
-};
-// Закрытие меню при клике вне
-document.addEventListener('click', (e)=>{
-    if(!menuDropdown.contains(e.target)&&!menuBtn.contains(e.target)){
-        menuDropdown.classList.remove('show');
-        menuBtn.classList.remove('open');
-    }
-});
-
-// Языки RU → EN → ES → CN
-const langBtn=document.getElementById('langBtn');
-let lang='ru';
-const dict={
-ru:{overview:'Обзор',architecture:'Архитектура',gallery:'Галерея',title1:'Городская идентичность',text1:'Murinsk — это современный город с акцентом на пространство и свет.',text2:'Минималистичный интерфейс подчёркивает архитектуру и ритм города.',title2:'Дизайн и атмосфера',text3:'Дневная и ночная темы создают разное настроение.',footer:'© 2026 MURINSK'},
-en:{overview:'Overview',architecture:'Architecture',gallery:'Gallery',title1:'Urban Identity',text1:'Murinsk is a modern city focused on space and light.',text2:'Minimal interface highlights architecture and rhythm.',title2:'Design & Atmosphere',text3:'Day and night themes create different moods.',footer:'© 2026 MURINSK'},
-es:{overview:'Resumen',architecture:'Arquitectura',gallery:'Galería',title1:'Identidad Urbana',text1:'Murinsk es una ciudad moderna enfocada en el espacio y la luz.',text2:'La interfaz minimalista resalta la arquitectura y el ritmo de la ciudad.',title2:'Diseño y Atmósfera',text3:'Los temas de día y noche crean diferentes ambientes.',footer:'© 2026 MURINSK'},
-cn:{overview:'概览',architecture:'建筑',gallery:'画廊',title1:'城市身份',text1:'Murinsk 是一个注重空间和光线的现代城市。',text2:'简约界面突出建筑和城市节奏。',title2:'设计与氛围',text3:'日夜主题营造不同氛围。',footer:'© 2026 MURINSK'}
-};
-function updateLang(){document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=dict[lang][el.dataset.i18n];});langBtn.textContent=lang.toUpperCase();}
-langBtn.onclick=()=>{if(lang==='ru')lang='en';else if(lang==='en')lang='es';else if(lang==='es')lang='cn';else lang='ru';updateLang();}
-updateLang();
+function toggleMenu(){
+  document.getElementById('menuDropdown').classList.toggle('active');
+}
 </script>
 
 </body>
