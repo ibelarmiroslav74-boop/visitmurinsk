@@ -2,138 +2,215 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<title>MURINSK</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Visit Murinsk</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <style>
 :root{
-  --bg:#0f0f14;
-  --card:#1a1a22;
-  --text:#ffffff;
-  --muted:#a0a0b0;
-  --shadow:rgba(0,0,0,0.5);
+    --bg:#f5f5f7;
+    --text:#1d1d1f;
+    --sub:#6e6e73;
+    --card:#ffffff;
+    --blur:rgba(255,255,255,0.7);
+    --shadow:rgba(0,0,0,0.12);
+}
+body.dark{
+    --bg:#0d0d0f;
+    --text:#f5f5f7;
+    --sub:#a1a1a6;
+    --card:#1c1c1e;
+    --blur:rgba(30,30,32,0.7);
+    --shadow:rgba(0,0,0,0.5);
 }
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-  font-family:Arial, Helvetica, sans-serif;
-}
-
+*{margin:0;padding:0;box-sizing:border-box;}
 body{
-  background:var(--bg);
-  color:var(--text);
+    font-family:'Press Start 2P', monospace;
+    background:var(--bg);
+    color:var(--text);
+    transition:.3s;
 }
 
 /* ===== HEADER ===== */
 header{
-  height:56px;               /* МЕНЬШЕ */
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:0 20px;
-  background:#111;
-  position:relative;
+    position:fixed;
+    top:0;
+    width:100%;
+    height:64px;              /* ТОНЬШЕ */
+    padding:0 32px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    background:var(--blur);
+    backdrop-filter:blur(0);
+    transition:.3s;
+    z-index:1000;
+}
+header.scrolled{
+    backdrop-filter:blur(20px);
+    box-shadow:0 1px 0 var(--shadow);
 }
 
-.logo{
-  font-size:16px;
-  font-weight:600;
-  letter-spacing:1px;
+.logo-block{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+.logo-block svg{
+    width:42px;
+    height:42px;
+}
+.logo-text span{
+    font-size:10px;
+    color:var(--sub);
 }
 
-.menu-btn{
-  cursor:pointer;
-  font-size:20px;
+/* ===== CONTROLS ===== */
+.nav-controls{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    position:relative;
+}
+button{
+    background:none;
+    border:none;
+    color:var(--text);
+    cursor:pointer;
+    font-size:14px;
+}
+
+/* ===== HAMBURGER ===== */
+#menuBtn{
+    width:26px;
+    height:18px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+#menuBtn span{
+    height:3px;
+    background:var(--text);
+    border-radius:2px;
+    transition:.3s;
+}
+#menuBtn.open span:nth-child(1){
+    transform:rotate(45deg) translate(4px,4px);
+}
+#menuBtn.open span:nth-child(2){
+    transform:rotate(-45deg) translate(4px,-4px);
 }
 
 /* ===== MENU ===== */
 #menuDropdown{
-  position:absolute;
-  top:56px;
-  right:16px;
-  background:var(--card);
-  border-radius:18px;
-  padding:20px;
-  display:flex;
-  flex-direction:column;
-  gap:16px;
-  box-shadow:0 16px 40px var(--shadow);
-  min-width:220px;
-  opacity:0;
-  transform:translateY(-8px);
-  pointer-events:none;
-  transition:0.25s ease;
+    position:absolute;
+    top:64px;                /* СРАЗУ ПОД ШАПКОЙ */
+    right:0;
+    width:260px;             /* КРУПНЕЕ */
+    background:var(--card);
+    border-radius:22px;
+    padding:26px;
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+    box-shadow:0 20px 40px var(--shadow);
+    opacity:0;
+    transform:translateY(-8px);
+    pointer-events:none;
+    transition:.25s;
 }
-
-#menuDropdown.active{
-  opacity:1;
-  transform:translateY(0);
-  pointer-events:auto;
+#menuDropdown.show{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
 }
-
 #menuDropdown a{
-  color:var(--text);
-  text-decoration:none;
-  font-size:15px;
+    text-decoration:none;
+    color:var(--text);
+    font-size:13px;
 }
 
 /* ===== CONTENT ===== */
-main{
-  padding:32px 20px;
+main{padding-top:120px;}
+section{
+    max-width:1000px;
+    margin:80px auto;
+    padding:0 20px;
 }
-
-.block{
-  background:var(--card);
-  border-radius:24px;
-  padding:32px;
-  max-width:900px;
-  margin:auto;
-}
-
-.block h1{
-  font-size:26px;
-  margin-bottom:14px;
-}
-
-.block p{
-  color:var(--muted);
-  font-size:16px;
-  line-height:1.6;
+section h2{font-size:22px;margin-bottom:20px;}
+section p{font-size:10px;color:var(--sub);max-width:720px;}
+footer{
+    text-align:center;
+    padding:40px;
+    font-size:10px;
+    color:var(--sub);
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="logo">VISIT MURINSK</div>
-  <div class="menu-btn" onclick="toggleMenu()">☰</div>
+<header id="header">
+    <div class="logo-block">
+        <svg viewBox="0 0 60 60">
+            <circle cx="15" cy="30" r="12" fill="#ff4c4c"/>
+            <rect x="28" y="8" width="12" height="44" fill="#4cff4c"/>
+            <polygon points="50,0 60,30 50,60" fill="#4c4cff"/>
+        </svg>
+        <div class="logo-text">
+            <strong>CITY</strong>
+            <span>MURINSK</span>
+        </div>
+    </div>
 
-  <div id="menuDropdown">
-    <a href="https://visitmurinsk.ru">Главная</a>
-    <a href="https://history.visitmurinsk.ru">История</a>
-    <a href="https://gallery.visitmurinsk.ru">Галерея</a>
-    <a href="https://review.visitmurinsk.ru">Оставить отзыв</a>
-  </div>
+    <div class="nav-controls">
+        <button id="langBtn">RU</button>
+        <button id="themeBtn">☀️</button>
+
+        <div id="menuBtn">
+            <span></span>
+            <span></span>
+        </div>
+
+        <div id="menuDropdown">
+            <a href="https://history.visitmurinsk.ru">История</a>
+            <a href="https://gallery.visitmurinsk.ru">Галерея</a>
+            <a href="https://review.visitmurinsk.ru">Оставить отзыв</a>
+        </div>
+    </div>
 </header>
 
 <main>
-  <div class="block">
-    <h1>Название страницы</h1>
-    <p>
-      Здесь меняется только контент.
-      Шапка и меню остаются одинаковыми
-      на всех страницах сайта.
-    </p>
-  </div>
+<section>
+    <h2>Город Murinsk</h2>
+    <p>Современный город с акцентом на архитектуру и пространство.</p>
+</section>
 </main>
 
+<footer>© 2026 MURINSK</footer>
+
 <script>
-function toggleMenu(){
-  document.getElementById('menuDropdown').classList.toggle('active');
-}
+const header=document.getElementById('header');
+window.addEventListener('scroll',()=>header.classList.toggle('scrolled',scrollY>20));
+
+themeBtn.onclick=()=>{
+    document.body.classList.toggle('dark');
+    themeBtn.textContent=document.body.classList.contains('dark')?'🌙':'☀️';
+};
+
+menuBtn.onclick=()=>{
+    menuDropdown.classList.toggle('show');
+    menuBtn.classList.toggle('open');
+};
+
+document.addEventListener('click',e=>{
+    if(!menuDropdown.contains(e.target)&&!menuBtn.contains(e.target)){
+        menuDropdown.classList.remove('show');
+        menuBtn.classList.remove('open');
+    }
+});
 </script>
 
 </body>
