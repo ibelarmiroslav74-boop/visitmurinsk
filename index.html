@@ -109,16 +109,41 @@ body.dark .control-btn:hover{background:rgba(255,255,255,.08);}
     min-width:200px;
     padding:20px;
     border-radius:18px;
-    background:var(--card);
-    backdrop-filter:blur(20px);
+
+    background: var(--card);
+    backdrop-filter: blur(20px) saturate(160%);
+    -webkit-backdrop-filter: blur(20px) saturate(160%);
+
     box-shadow:0 16px 40px var(--shadow);
     display:flex;
     flex-direction:column;
     gap:14px;
+
     opacity:0;
     transform:translateY(-10px);
     pointer-events:none;
     transition:.25s;
+}
+
+#menuDropdown.show{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
+}
+
+
+#menuDropdown.show{
+    opacity:1;
+    transform:translateY(0);
+    pointer-events:auto;
+}
+
+body.dark #menuDropdown{
+    background: rgba(30,30,32,0.75);
+}
+
+}
+
 }
 #menuDropdown.show{
     opacity:1;
@@ -167,16 +192,34 @@ footer{
 
 <body>
 <header id="header">
-    <div class="logo-block">
-        <svg viewBox="0 0 60 60">
-            <circle cx="15" cy="30" r="12" fill="#ff4c4c"/>
-            <rect x="28" y="8" width="12" height="44" fill="#4cff4c"/>
-            <polygon points="50,0 60,30 50,60" fill="#4c4cff"/>
-        </svg>
-        <div class="logo-text">
-            <span>MURINSK</span>
-        </div>
-    </div>
+<div class="logo-block">
+    <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="glassGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="rgba(255,255,255,0.35)"/>
+                <stop offset="100%" stop-color="rgba(255,255,255,0.06)"/>
+            </linearGradient>
+        </defs>
+
+        <rect x="11" y="24" width="12" height="26" rx="5"
+              fill="#5fae7a" fill-opacity="0.85"/>
+        <rect x="11" y="24" width="12" height="26" rx="5"
+              fill="url(#glassGrad)"/>
+
+        <rect x="25" y="16" width="14" height="34" rx="6"
+              fill="#c94a4a" fill-opacity="0.85"/>
+        <rect x="25" y="16" width="14" height="34" rx="6"
+              fill="url(#glassGrad)"/>
+
+        <rect x="41" y="26" width="10" height="24" rx="5"
+              fill="#5a6fb3" fill-opacity="0.85"/>
+        <rect x="41" y="26" width="10" height="24" rx="5"
+              fill="url(#glassGrad)"/>
+    </svg>
+
+    <span class="logo-text">Murinsk</span>
+</div>
+
 
     <div class="nav-controls">
         <button id="langBtn" class="control-btn">RU</button>
