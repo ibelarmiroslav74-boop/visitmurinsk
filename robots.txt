@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://murinsk.example/sitemap.xml
+Sitemap: https://ibelaromiroslav74-boop.github.io/visitmurinsk/sitemap.xml
