@@ -1,4 +1,3 @@
 User-agent: *
 Allow: /
-
 Sitemap: https://visitmurinsk.ru/sitemap.xml
