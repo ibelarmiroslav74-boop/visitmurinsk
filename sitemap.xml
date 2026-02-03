@@ -8,19 +8,19 @@
   </url>
   <!-- Галерея -->
   <url>
-    <loc>https://visitmurinsk.gallery.html</loc>
+    <loc>https://visitmurinsk/gallery.html</loc>
     <lastmod>2024-05-20</lastmod>
     <priority>0.8</priority>
   </url>
   <!-- History -->
   <url>
-    <loc>https://visitmurinsk.history.html</loc>
+    <loc>https://visitmurinsk/history.html</loc>
     <lastmod>2024-05-20</lastmod>
     <priority>0.8</priority>
   </url>
   <!-- Отзывы -->
   <url>
-    <loc>https://visitmurinsk.review.html</loc>
+    <loc>https://visitmurinsk/review.html</loc>
     <lastmod>2024-05-20</lastmod>
     <priority>0.7</priority>
   </url>
