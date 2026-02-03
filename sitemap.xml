@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="https://www.sitemaps.org/schemas/sitemap/0.9">
-
+<urlset xmlns="http://www.sitemaps.org">
+  <!-- Главная страница -->
   <url>
-    <loc>https://visitmurinsk.ru/</loc>
+    <loc>https://visitmurinsk.ru</loc>
+    <lastmod>2024-05-20</lastmod>
     <priority>1.0</priority>
   </url>
-
+  <!-- Галерея -->
   <url>
-    <loc>https://visitmurinsk.ru/history.html</loc>
+    <loc>https://visitmurinsk.gallery.html</loc>
+    <lastmod>2024-05-20</lastmod>
     <priority>0.8</priority>
   </url>
-
+  <!-- История -->
   <url>
-    <loc>https://visitmurinsk.ru/gallery.html</loc>
+    <loc>https://visitmurinsk.history.html</loc>
+    <lastmod>2024-05-20</lastmod>
     <priority>0.8</priority>
   </url>
-
+  <!-- Отзывы -->
   <url>
-    <loc>https://visitmurinsk.ru/review.html</loc>
+    <loc>https://visitmurinsk.review.html</loc>
+    <lastmod>2024-05-20</lastmod>
     <priority>0.7</priority>
   </url>
-
 </urlset>
-
