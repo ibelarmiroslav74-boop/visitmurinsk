@@ -4,12 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Murinsk — Gallery</title>
+<title>Murinsk (Муринск) — город в Minecraft | visitmurinsk.ru</title>
 
-  <link rel="canonical" href="https://visitmurinsk.ru/gallery.html">
+<meta name="description" content="Murinsk (Муринск) — город в Minecraft. Официальный сайт проекта: история, карта города, галерея и развитие. visitmurinsk.ru">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://visitmurinsk.ru">
+<link rel="icon" type="image/png" href="/favicon.png">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Unbounded:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -17,374 +22,245 @@
 --text:#1d1d1f;
 --sub:#6e6e73;
 --glass:rgba(255,255,255,.7);
---menu-glass:rgba(255,255,255,.9);
+--menu:rgba(255,255,255,.95);
 --shadow:rgba(0,0,0,.12);
 }
-
 body.dark{
 --bg:#0d0d0f;
 --text:#f5f5f7;
 --sub:#a1a1a6;
 --glass:rgba(30,30,32,.75);
---menu-glass:rgba(22,22,24,.9);
+--menu:rgba(35,35,38,.95);
 --shadow:rgba(0,0,0,.45);
 }
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-transition:
-background-color .4s cubic-bezier(.4,0,.2,1),
-border-color .4s cubic-bezier(.4,0,.2,1);
-}
-
+*{margin:0;padding:0;box-sizing:border-box}
 body{
 font-family:'Press Start 2P', monospace;
 background:var(--bg);
 color:var(--text);
-overflow-x:hidden;
+transition:.3s;
 }
 
-/* ===== HEADER ===== */
 header{
 position:fixed;
 top:0;left:0;right:0;
-height:88px;
-z-index:1000;
-pointer-events:none;
+z-index:1000
 }
 
 .header-inner{
-pointer-events:auto;
 max-width:1200px;
-margin:12px auto 0;
-padding:12px 20px;
+margin:14px auto;
+padding:14px 26px;
 display:flex;
 justify-content:space-between;
 align-items:center;
 background:var(--glass);
-backdrop-filter:blur(22px) saturate(160%);
+backdrop-filter:blur(22px);
 border-radius:999px;
-box-shadow:0 12px 30px var(--shadow);
+box-shadow:0 10px 28px var(--shadow)
 }
 
-/* ===== LOGO ===== */
+@media (max-width:768px){
+.header-inner{
+margin:14px 14px;
+padding:14px 18px;
+}
+}
+
 .logo{
 font-family:'Unbounded',sans-serif;
-font-size:18px;
-font-weight:600;
+font-weight:700;
+font-size:18px
 }
 
-/* ===== CONTROLS ===== */
-.controls{
-display:flex;
-align-items:center;
-gap:10px;
-position:relative;
-}
+.controls{display:flex;gap:10px}
 
 button{
 border:none;
-cursor:pointer;
 background:var(--glass);
 color:var(--text);
-box-shadow:0 6px 18px var(--shadow);
+cursor:pointer;
+box-shadow:0 6px 16px var(--shadow);
+display:flex;
+align-items:center;
+justify-content:center;
 }
 
-/* ===== LANG ===== */
 #langBtn{
-width:36px;
-height:36px;
-border-radius:50%;
 font-family:'Unbounded',sans-serif;
+width:44px;height:36px;
+border-radius:999px;
 font-size:12px;
-display:flex;
-align-items:center;
-justify-content:center;
-padding:0;
+transition:transform .2s;
 }
+#langBtn:active{transform:scale(.9)}
 
-/* ===== THEME ===== */
 #themeBtn{
-width:36px;
-height:36px;
+width:36px;height:36px;
 border-radius:50%;
-display:flex;
-align-items:center;
-justify-content:center;
 position:relative;
+overflow:hidden;
 }
 
 #themeBtn svg{
 position:absolute;
-width:18px;height:18px;
-stroke:var(--text);
-stroke-width:1.6;
-fill:none;
-transition:
-opacity .4s ease,
-transform .45s cubic-bezier(.4,0,.2,1);
+width:20px;
+height:20px;
+fill:currentColor;
+transition: transform .5s cubic-bezier(.4,0,.2,1), opacity .3s;
 }
 
-#moonIcon{opacity:0;transform:rotate(-40deg) scale(.6)}
-body.dark #moonIcon{opacity:1;transform:rotate(0) scale(1)}
-body.dark #sunIcon{opacity:0;transform:rotate(90deg) scale(.6)}
+#sun{opacity:1; transform: translateX(0) rotate(0deg);}
+#moon{opacity:0; transform: translateX(15px) rotate(90deg);}
 
-/* ===== BURGER ===== */
+body.dark #sun{opacity:0; transform: translateX(15px) rotate(90deg);}
+body.dark #moon{opacity:1; transform: translateX(0) rotate(0deg);}
+
+
 #menuBtn{
 width:36px;height:36px;
 border-radius:50%;
-position:relative;
+position:relative
 }
-
 #menuBtn span{
 position:absolute;
 left:50%;top:50%;
 width:18px;height:2px;
 background:var(--text);
-transition:.25s ease;
+transition:.25s
 }
+#menuBtn span:first-child{transform:translate(-50%,-50%) translateY(-4px)}
+#menuBtn span:last-child{transform:translate(-50%,-50%) translateY(4px)}
+#menuBtn.open span:first-child{transform:translate(-50%,-50%) rotate(45deg)}
+#menuBtn.open span:last-child{transform:translate(-50%,-50%) rotate(-45deg)}
 
-#menuBtn span:nth-child(1){
-transform:translate(-50%,-50%) translateY(-4px);
-}
-#menuBtn span:nth-child(2){
-transform:translate(-50%,-50%) translateY(4px);
-}
-
-#menuBtn.open span:nth-child(1){
-transform:translate(-50%,-50%) rotate(45deg);
-}
-#menuBtn.open span:nth-child(2){
-transform:translate(-50%,-50%) rotate(-45deg);
-}
-
-/* ===== MENU ===== */
 nav{
 position:absolute;
-top:calc(100% + 14px);
-right:0;
-width:240px;
-padding:22px 20px 24px;
-border-radius:22px;
-background:var(--menu-glass);
-backdrop-filter:blur(22px) saturate(160%);
-box-shadow:0 18px 45px var(--shadow);
+top:100%;
+left:50%;
+transform:translateX(-50%) translateY(-10px);
+background:var(--menu);
+padding:28px 48px;
+border-radius:32px;
+box-shadow:0 18px 40px var(--shadow);
 display:flex;
 flex-direction:column;
-gap:16px;
+gap:20px;
+text-align:center;
 opacity:0;
 pointer-events:none;
-transform:translateY(-10px);
-transition:.26s cubic-bezier(.4,0,.2,1);
+transition:.3s;
+min-width:clamp(260px,70vw,420px);
 }
-
 nav.show{
 opacity:1;
 pointer-events:auto;
-transform:translateY(0);
+transform:translateX(-50%) translateY(10px)
 }
 
 nav a{
-font-size:12px;
-text-decoration:none;
 color:var(--text);
+text-decoration:none;
+font-size:12px;
 opacity:0;
-transform:translateY(8px);
-transition:.3s ease;
+transform:translateY(-12px);
+transition: opacity .35s ease, transform .45s cubic-bezier(.4,0,.2,1);
 }
-
 nav.show a{
 opacity:1;
 transform:translateY(0);
 }
+nav.show a:nth-child(1){transition-delay:.05s}
+nav.show a:nth-child(2){transition-delay:.1s}
+nav.show a:nth-child(3){transition-delay:.15s}
+nav.show a:nth-child(4){transition-delay:.2s}
 
-nav.show a:nth-child(1){transition-delay:.04s}
-nav.show a:nth-child(2){transition-delay:.08s}
-nav.show a:nth-child(3){transition-delay:.12s}
-nav.show a:nth-child(4){transition-delay:.16s}
-
-/* ===== CONTENT ===== */
-main{
-padding-top:140px;
-transition:
-opacity .22s ease,
-transform .22s ease,
-filter .22s ease;
-}
-
-main.lang-out{
-opacity:0;
-transform:translateY(-12px);
-filter:blur(3px);
-}
-
+main{padding-top:140px}
 section{
 max-width:960px;
-margin:70px auto;
-padding:0 18px;
+margin:80px auto;
+padding:0 20px
 }
-
-h1{font-size:26px;margin-bottom:18px}
-h2{font-size:20px;margin-bottom:14px}
-
+h1{
+font-family:'Unbounded',sans-serif;
+font-size:22px;
+margin-bottom:28px
+}
 p{
 font-size:10px;
+line-height:1.9;
 color:var(--sub);
-margin-bottom:14px;
+margin-bottom:18px
 }
-
-img{
-width:100%;
-border-radius:18px;
-box-shadow:0 18px 40px var(--shadow);
-}
-
 footer{
 text-align:center;
-padding:36px;
+padding:40px;
 font-size:10px;
-color:var(--sub);
-}
-
-/* ===== MOBILE ===== */
-@media(max-width:768px){
-  nav{
-    top:calc(100% + 28px);
-    left:-255px;
-    right:-200px;
-    width:400px;
-    border-radius:36px;
-    padding:50px 30px 43px;
-    gap:20px;
-    text-align:center;
-  }
+color:var(--sub)
 }
 </style>
 </head>
 
 <body>
 
-<header>
-  <div class="header-inner">
-    <div class="logo">Murinsk</div>
+<!-- ИЗМЕНЕНИЕ 1: Заменяем весь старый HTML-код меню на этот DIV -->
+<header id="menu-container"></header>
 
-    <div class="controls">
-      <button id="langBtn">RU</button>
-
-      <button id="themeBtn">
-        <svg id="sunIcon" viewBox="0 0 24 24">
-          <circle cx="12" cy="12" r="4"/>
-          <line x1="12" y1="1.5" x2="12" y2="5"/>
-          <line x1="12" y1="19" x2="12" y2="22.5"/>
-          <line x1="4" y1="6" x2="7" y2="9"/>
-          <line x1="17" y1="15" x2="20" y2="18"/>
-          <line x1="17" y1="9" x2="20" y2="6"/>
-          <line x1="4" y1="18" x2="7" y2="15"/>
-        </svg>
-        <svg id="moonIcon" viewBox="0 0 24 24">
-          <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 1 0 9.8 9.8z"/>
-        </svg>
-      </button>
-
-      <button id="menuBtn"><span></span><span></span></button>
-
-      <!-- ИЗМЕНЕНЫ ТОЛЬКО ССЫЛКИ -->
-      <nav id="menu">
-        <a href="index.html" data-i18n="home"></a>
-        <a href="gallery.html" data-i18n="gallery"></a>
-        <a href="history.html" data-i18n="history"></a>
-        <a href="review.html" data-i18n="review"></a>
-      </nav>
-    </div>
-  </div>
-</header>
-
-<main id="content">
+<main>
 <section>
-<h1 data-i18n="title1"></h1>
-<p data-i18n="text1"></p>
-<p data-i18n="text2"></p>
-<img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000">
-</section>
-
-<section>
-<h2 data-i18n="title2"></h2>
-<p data-i18n="text3"></p>
-<img src="https://images.unsplash.com/photo-1494526585095-c41746248156">
+<h1>Murinsk (Муринск) — город в Minecraft</h1>
+<p data-ru>Murinsk — это город в Minecraft.</p>
+<p data-en>Murinsk is a city in Minecraft.</p>
 </section>
 </main>
 
-<footer data-i18n="footer"></footer>
+<footer>© Murinsk · visitmurinsk.ru</footer>
 
+<!-- ИЗМЕНЕНИЕ 2: Добавляем новый скрипт внизу и оборачиваем старый в функцию -->
 <script>
-const themeBtn=document.getElementById('themeBtn');
-const menuBtn=document.getElementById('menuBtn');
-const menu=document.getElementById('menu');
-const langBtn=document.getElementById('langBtn');
-const content=document.getElementById('content');
+// НОВЫЙ код: Загружает menu.html и запускает функции после загрузки
+fetch('menu.html')
+    .then(response => response.text())
+    .then(html => {
+        document.getElementById('menu-container').innerHTML = html;
+        initializeMenuFunctions(); // Запускаем ваши скрипты
+    });
 
-themeBtn.onclick=()=>document.body.classList.toggle('dark');
 
-menuBtn.onclick=()=>{
-menuBtn.classList.toggle('open');
-menu.classList.toggle('show');
-};
+// ВАШ СТАРЫЙ СКРИПТ (теперь внутри функции)
+function initializeMenuFunctions() {
+    const menuBtn=document.getElementById('menuBtn');
+    const menu=document.getElementById('menu');
+    const themeBtn=document.getElementById('themeBtn');
+    const langBtn=document.getElementById('langBtn');
 
-let lang=new URLSearchParams(location.search).get('lang')||'ru';
+    menuBtn.onclick=()=>{
+    menuBtn.classList.toggle('open');
+    menu.classList.toggle('show');
+    };
 
-const dict={
-ru:{
-home:'Главная',
-gallery:'Галерея',
-history:'История',
-review:'Оставить отзыв',
-title1:'Murinsk — современный город',
-text1:'Murinsk — современный город с уникальной архитектурой.',
-text2:'Городская идентичность формируется через пространство и свет.',
-title2:'Дизайн и атмосфера',
-text3:'День и ночь создают разные впечатления.',
-footer:'© 2026 Murinsk — Официальный сайт'
-},
-en:{
-home:'Home',
-gallery:'Gallery',
-history:'History',
-review:'Leave a review',
-title1:'Murinsk — modern city',
-text1:'Murinsk is a modern city with unique architecture.',
-text2:'Urban identity is shaped through space and light.',
-title2:'Design & Atmosphere',
-text3:'Day and night create different impressions.',
-footer:'© 2026 Murinsk — Official website'
+    if(matchMedia('(prefers-color-scheme: dark)').matches){
+    document.body.classList.add('dark');
+    }
+    themeBtn.onclick=()=>document.body.classList.toggle('dark');
+
+    let lang='ru';
+    function updateLang(){
+    langBtn.textContent=lang.toUpperCase();
+    document.querySelectorAll('[data-ru]').forEach(e=>e.style.display=lang==='ru'?'block':'none');
+    document.querySelectorAll('[data-en]').forEach(e=>e.style.display=lang==='en'?'block':'none');
+    }
+    langBtn.onclick=()=>{
+    lang=lang==='ru'?'en':'ru';
+    langBtn.animate(
+    [{transform:'scale(1)'},{transform:'scale(1.15)'},{transform:'scale(1)'}],
+    {duration:200}
+    );
+    updateLang();
+    };
+    updateLang();
 }
-};
+</script>
 
-function updateLang(){
-document.documentElement.lang=lang;
-document.querySelectorAll('[data-i18n]').forEach(el=>{
-el.textContent=dict[lang][el.dataset.i18n];
-});
-langBtn.textContent=lang.toUpperCase();
-}
-
-langBtn.onclick=()=>{
-content.classList.add('lang-out');
-setTimeout(()=>{
-lang=lang==='ru'?'en':'ru';
-updateLang();
-history.replaceState(null,'',lang==='en'?'?lang=en':'/');
-content.classList.remove('lang-out');
-},180);
-};
-
-
-
-
-
-
-
-
-
-
+</body>
+</html>
