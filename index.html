@@ -4,42 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Murinsk (Муринск) — город в Minecraft | visitmurinsk.ru</title>
+<title>Муринск — город в Minecraft | visitmurinsk.ru</title>
 
 <meta name="description" content="Murinsk (Муринск) — город в Minecraft. Официальный сайт проекта: история, карта города, галерея и развитие. visitmurinsk.ru">
 <meta name="robots" content="index, follow">
-<link rel="canonical" href="https://visitmurinsk.ru/">
-
+<link rel="canonical" href="https://visitmurinsk.ru">
 <link rel="icon" type="image/png" href="/favicon.png">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-
-<!-- ========= MICRODATA / SCHEMA ========= -->
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Murinsk",
-  "alternateName": ["Муринск", "Murinsk", "город Murinsk в Minecraft"],
-  "url": "https://visitmurinsk.ru",
-  "inLanguage": ["ru","en"]
-}
-</script>
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Place",
-  "name": "Murinsk",
-  "alternateName": ["Муринск","Murinsk","город в Minecraft Муринск"],
-  "url": "https://visitmurinsk.ru"
-}
-</script>
-<!-- ==================================== -->
 
 <style>
 :root{
@@ -47,7 +22,7 @@
 --text:#1d1d1f;
 --sub:#6e6e73;
 --glass:rgba(255,255,255,.7);
---menu:rgba(255,255,255,.9);
+--menu:rgba(255,255,255,.95);
 --shadow:rgba(0,0,0,.12);
 }
 body.dark{
@@ -55,7 +30,7 @@ body.dark{
 --text:#f5f5f7;
 --sub:#a1a1a6;
 --glass:rgba(30,30,32,.75);
---menu:rgba(22,22,24,.9);
+--menu:rgba(35,35,38,.95);
 --shadow:rgba(0,0,0,.45);
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -63,14 +38,19 @@ body{
 font-family:'Press Start 2P', monospace;
 background:var(--bg);
 color:var(--text);
+transition:.3s;
 }
+
 header{
-position:fixed;top:0;left:0;right:0;z-index:1000
+position:fixed;
+top:0;left:0;right:0;
+z-index:1000
 }
+
 .header-inner{
 max-width:1200px;
 margin:14px auto;
-padding:14px 20px;
+padding:14px 26px;
 display:flex;
 justify-content:space-between;
 align-items:center;
@@ -79,41 +59,66 @@ backdrop-filter:blur(22px);
 border-radius:999px;
 box-shadow:0 10px 28px var(--shadow)
 }
+
+@media (max-width:768px){
+.header-inner{
+margin:14px 14px;
+padding:14px 18px;
+}
+}
+
 .logo{
 font-family:'Unbounded',sans-serif;
 font-weight:700;
 font-size:18px
 }
+
 .controls{display:flex;gap:10px}
+
 button{
 border:none;
 background:var(--glass);
 color:var(--text);
 cursor:pointer;
-box-shadow:0 6px 16px var(--shadow)
+box-shadow:0 6px 16px var(--shadow);
+display:flex;
+align-items:center;
+justify-content:center;
 }
+
 #langBtn{
 font-family:'Unbounded',sans-serif;
 width:44px;height:36px;
 border-radius:999px;
-font-size:12px
+font-size:12px;
+transition:transform .2s;
 }
+#langBtn:active{transform:scale(.9)}
+
 #themeBtn{
 width:36px;height:36px;
 border-radius:50%;
-position:relative
+position:relative;
+overflow:hidden;
 }
+
 #themeBtn svg{
 position:absolute;
-width:18px;height:18px;
-stroke:var(--text);
-stroke-width:1.8;
-fill:none;
-transition:.35s
+width:20px;
+height:20px;
+fill:currentColor;
+/* Добавлено управление трансформацией */
+transition: transform .5s cubic-bezier(.4,0,.2,1), opacity .3s;
 }
-#moon{opacity:0;transform:scale(.6)}
-body.dark #moon{opacity:1;transform:scale(1)}
-body.dark #sun{opacity:0}
+
+/* Солнце в центре, Луна спрятана справа с поворотом */
+#sun{opacity:1; transform: translateX(0) rotate(0deg);}
+#moon{opacity:0; transform: translateX(15px) rotate(90deg);}
+
+/* При темной теме: Солнце уходит вправо, Луна встает в центр */
+body.dark #sun{opacity:0; transform: translateX(15px) rotate(90deg);}
+body.dark #moon{opacity:1; transform: translateX(0) rotate(0deg);}
+
 
 #menuBtn{
 width:36px;height:36px;
@@ -138,28 +143,43 @@ top:100%;
 left:50%;
 transform:translateX(-50%) translateY(-10px);
 background:var(--menu);
-padding:26px;
-border-radius:28px;
+padding:28px 48px;
+border-radius:32px;
 box-shadow:0 18px 40px var(--shadow);
 display:flex;
 flex-direction:column;
-gap:18px;
+gap:20px;
 text-align:center;
 opacity:0;
 pointer-events:none;
-transition:.3s
+transition:.3s;
+min-width:clamp(260px,70vw,420px);
 }
 nav.show{
 opacity:1;
 pointer-events:auto;
 transform:translateX(-50%) translateY(10px)
 }
+
+/* АНИМАЦИЯ ПУНКТОВ МЕНЮ */
 nav a{
-text-decoration:none;
 color:var(--text);
+text-decoration:none;
 font-size:12px;
-font-weight:700
+opacity:0;
+transform:translateY(-12px);
+transition:
+opacity .35s ease,
+transform .45s cubic-bezier(.4,0,.2,1);
 }
+nav.show a{
+opacity:1;
+transform:translateY(0);
+}
+nav.show a:nth-child(1){transition-delay:.05s}
+nav.show a:nth-child(2){transition-delay:.1s}
+nav.show a:nth-child(3){transition-delay:.15s}
+nav.show a:nth-child(4){transition-delay:.2s}
 
 main{padding-top:140px}
 section{
@@ -177,11 +197,6 @@ font-size:10px;
 line-height:1.9;
 color:var(--sub);
 margin-bottom:18px
-}
-img{
-width:100%;
-border-radius:18px;
-margin:24px 0
 }
 footer{
 text-align:center;
@@ -201,18 +216,18 @@ color:var(--sub)
 <div class="controls">
 <button id="langBtn">RU</button>
 
+
 <button id="themeBtn">
 <svg id="sun" viewBox="0 0 24 24">
-<circle cx="12" cy="12" r="4"/>
-<line x1="12" y1="2" x2="12" y2="5"/>
-<line x1="12" y1="19" x2="12" y2="22"/>
-<line x1="2" y1="12" x2="5" y2="12"/>
-<line x1="19" y1="12" x2="22" y2="12"/>
+<circle cx="12" cy="12" r="5"/>
+<!-- Добавлены параметры stroke для отображения лучей -->
+<path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 </svg>
 <svg id="moon" viewBox="0 0 24 24">
-<path d="M21 12.8A9 9 0 1 1 11.2 3"/>
+<path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
 </svg>
 </button>
+
 
 <button id="menuBtn"><span></span><span></span></button>
 </div>
@@ -228,35 +243,9 @@ color:var(--sub)
 
 <main>
 <section>
-
 <h1>Murinsk (Муринск) — город в Minecraft</h1>
-
-<p data-ru>
-Murinsk — это город в Minecraft, также известный как Муринск.
-Проект Murinsk имеет собственный официальный сайт visitmurinsk.ru,
-где публикуется информация о развитии города, его истории,
-архитектуре и виртуальной жизни.
-</p>
-
-<p data-en>
-Murinsk is a city in Minecraft. The official project website is visitmurinsk.ru,
-where you can explore the city, its history, architecture and development.
-</p>
-
-<img src="https://picsum.photos/900/420?murinsk1" alt="Murinsk city">
-
-<p data-ru>
-Город Murinsk создаётся как полноценный виртуальный мир,
-с районами, улицами и уникальной атмосферой.
-</p>
-
-<p data-en>
-Murinsk is designed as a full virtual city with districts,
-streets and a unique atmosphere.
-</p>
-
-<img src="https://picsum.photos/900/420?murinsk2" alt="Murinsk minecraft city">
-
+<p data-ru>Murinsk — это город в Minecraft.</p>
+<p data-en>Murinsk is a city in Minecraft.</p>
 </section>
 </main>
 
@@ -265,6 +254,9 @@ streets and a unique atmosphere.
 <script>
 const menuBtn=document.getElementById('menuBtn');
 const menu=document.getElementById('menu');
+const themeBtn=document.getElementById('themeBtn');
+const langBtn=document.getElementById('langBtn');
+
 menuBtn.onclick=()=>{
 menuBtn.classList.toggle('open');
 menu.classList.toggle('show');
@@ -275,17 +267,21 @@ document.body.classList.add('dark');
 }
 themeBtn.onclick=()=>document.body.classList.toggle('dark');
 
-const langBtn=document.getElementById('langBtn');
 let lang='ru';
-langBtn.onclick=()=>{
-lang=lang==='ru'?'en':'ru';
+function updateLang(){
 langBtn.textContent=lang.toUpperCase();
-langBtn.animate([{transform:'scale(1)'},{transform:'scale(1.12)'},{transform:'scale(1)'}],
-{duration:200});
 document.querySelectorAll('[data-ru]').forEach(e=>e.style.display=lang==='ru'?'block':'none');
 document.querySelectorAll('[data-en]').forEach(e=>e.style.display=lang==='en'?'block':'none');
+}
+langBtn.onclick=()=>{
+lang=lang==='ru'?'en':'ru';
+langBtn.animate(
+[{transform:'scale(1)'},{transform:'scale(1.15)'},{transform:'scale(1)'}],
+{duration:200}
+);
+updateLang();
 };
-langBtn.onclick();
+updateLang();
 </script>
 
 </body>
