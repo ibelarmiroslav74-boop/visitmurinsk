@@ -291,10 +291,7 @@ color:var(--sub)
     <style>
     /* Настройки контейнера для параллакса */
     .parallax-wrapper {
-        height: 100vh;
-        overflow-x: hidden;
-        overflow-y: auto;
-        perspective: 2px; /* Создаем 3D пространство */
+        overflow: hidden;
     }
 .parallax-section {
     position: relative;
@@ -305,17 +302,19 @@ color:var(--sub)
     overflow: hidden; /* Обрезает лишнее */
 }
 
-.parallax-bg {
+    .parallax-bg {
     position: absolute;
-    top: 0;
+    top: -10%;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 120%;
     background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('img/bg.jpg');
     background-size: cover;
     background-position: center;
-    background-attachment: fixed; /* Более простой способ параллакса */
+    background-attachment: scroll;
     z-index: -1;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
 }
 
 
@@ -373,6 +372,11 @@ const menuBtn=document.getElementById('menuBtn');
 const menu=document.getElementById('menu');
 const themeBtn=document.getElementById('themeBtn');
 const langBtn=document.getElementById('langBtn');
+const parallaxSection=document.querySelector('.parallax-section');
+const parallaxBg=document.querySelector('.parallax-bg');
+const parallaxSpeed=0.3;
+let parallaxTicking=false;
+const prefersReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
 
 menuBtn.onclick=()=>{
 menuBtn.classList.toggle('open');
@@ -399,6 +403,37 @@ langBtn.animate(
 updateLang();
 };
 updateLang();
+
+function updateParallax(){
+if(!parallaxSection||!parallaxBg){
+return;
+}
+if(prefersReducedMotion.matches){
+parallaxBg.style.transform='translate3d(0, 0, 0)';
+return;
+}
+const rect=parallaxSection.getBoundingClientRect();
+const translate=rect.top*parallaxSpeed;
+parallaxBg.style.transform=`translate3d(0, ${translate}px, 0)`;
+}
+
+function requestParallaxUpdate(){
+if(parallaxTicking){
+return;
+}
+parallaxTicking=true;
+requestAnimationFrame(()=>{
+updateParallax();
+parallaxTicking=false;
+});
+}
+
+window.addEventListener('scroll',requestParallaxUpdate,{passive:true});
+window.addEventListener('resize',requestParallaxUpdate);
+if(typeof prefersReducedMotion.addEventListener==='function'){
+prefersReducedMotion.addEventListener('change',requestParallaxUpdate);
+}
+updateParallax();
 </script>
 
 </body>
