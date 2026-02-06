@@ -348,7 +348,7 @@ color:var(--sub)
 
     .hero-title-text {
         display: inline-block;
-        white-space: nowrap;
+        white-space: normal;
         overflow: hidden;
         border-right: 3px solid rgba(255, 255, 255, 0.85);
         max-width: 0;
@@ -363,7 +363,7 @@ color:var(--sub)
 
     @keyframes heroTyping {
         from { max-width: 0; }
-        to { max-width: var(--hero-title-length, 24ch); }
+        to { max-width: min(var(--hero-title-length, 24ch), 90vw); }
     }
 
     @keyframes heroCursor {
@@ -374,6 +374,11 @@ color:var(--sub)
     @media (max-width: 600px) {
         .parallax-content h1 {
             font-size: clamp(1.35rem, 9vw, 2.1rem);
+        }
+
+        .hero-title-text {
+            max-width: 0;
+            line-height: 1.25;
         }
     }
 
