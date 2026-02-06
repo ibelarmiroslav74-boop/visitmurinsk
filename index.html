@@ -356,26 +356,6 @@ color:var(--sub)
     .hero-title-line {
         display: inline-block;
         white-space: normal;
-        overflow: hidden;
-        border-right: 3px solid rgba(255, 255, 255, 0.85);
-        max-width: 0;
-        animation:
-            heroTyping var(--hero-line-duration, 1.8s) steps(var(--hero-line-steps, 24), end) var(--hero-line-delay, 0ms) forwards,
-            heroCursor .7s step-end var(--hero-line-delay, 0ms) infinite;
-    }
-
-    .hero-title-line.done {
-        border-right-color: transparent;
-    }
-
-    @keyframes heroTyping {
-        from { max-width: 0; }
-        to { max-width: min(var(--hero-line-length, 24ch), 90vw); }
-    }
-
-    @keyframes heroCursor {
-        0%, 100% { border-right-color: rgba(255, 255, 255, 0.85); }
-        50% { border-right-color: transparent; }
     }
 
     @media (max-width: 600px) {
@@ -388,7 +368,6 @@ color:var(--sub)
         }
 
         .hero-title-line {
-            max-width: 0;
             line-height: 1.25;
         }
     }
@@ -471,29 +450,26 @@ if(!heroTitle){
 return;
 }
 const text=heroTitle.textContent.trim();
+if(!heroTypingIsMobile){
+heroTitle.textContent=text;
+return;
+}
+
 heroTitle.innerHTML='';
-const lines=heroTypingIsMobile?splitHeroTextIntoLines(text):[text];
 const linesWrapper=document.createElement('span');
 linesWrapper.className='hero-title-lines';
-let totalDuration=0;
+const lines=text==='Добро пожаловать!'
+?['Добро','пожаловать!']
+:splitHeroTextIntoLines(text);
 
 lines.forEach(line=>{
 const lineSpan=document.createElement('span');
-const lineDuration=Math.max(650,line.length*75);
 lineSpan.className='hero-title-line';
-lineSpan.style.setProperty('--hero-line-length',`${line.length}ch`);
-lineSpan.style.setProperty('--hero-line-steps',line.length);
-lineSpan.style.setProperty('--hero-line-duration',`${lineDuration}ms`);
-lineSpan.style.setProperty('--hero-line-delay',`${totalDuration}ms`);
 lineSpan.textContent=line;
 linesWrapper.appendChild(lineSpan);
-totalDuration+=lineDuration+120;
 });
 
 heroTitle.appendChild(linesWrapper);
-window.setTimeout(()=>{
-heroTitle.querySelectorAll('.hero-title-line').forEach(line=>line.classList.add('done'));
-},totalDuration);
 }
 
 function normalizePath(path){
