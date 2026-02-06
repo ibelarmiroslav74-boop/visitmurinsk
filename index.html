@@ -335,11 +335,37 @@ color:var(--sub)
         padding: 20px;
     }
 
-    .parallax-content h1 {
+.parallax-content h1 {
         font-size: clamp(2rem, 8vw, 5rem); /* Адаптивный размер шрифта */
         text-transform: uppercase;
         text-shadow: 0px 5px 15px rgba(0, 0, 0, 0.8);
         margin: 0;
+        min-height: 1.2em;
+    }
+
+    .hero-title-text {
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        border-right: 3px solid rgba(255, 255, 255, 0.85);
+        max-width: 0;
+        animation:
+            heroTyping 1.8s steps(24, end) forwards,
+            heroCursor .7s step-end infinite;
+    }
+
+    .hero-title-text.done {
+        border-right-color: transparent;
+    }
+
+    @keyframes heroTyping {
+        from { max-width: 0; }
+        to { max-width: var(--hero-title-length, 24ch); }
+    }
+
+    @keyframes heroCursor {
+        0%, 100% { border-right-color: rgba(255, 255, 255, 0.85); }
+        50% { border-right-color: transparent; }
     }
 
     /* Обычный блок для контента после параллакса */
@@ -382,9 +408,28 @@ const themeBtn=document.getElementById('themeBtn');
 const langBtn=document.getElementById('langBtn');
 const parallaxSection=document.querySelector('.parallax-section');
 const parallaxBg=document.querySelector('.parallax-bg');
-const parallaxSpeed=0.3;
-let parallaxTicking=false;
+const parallaxSpeed=0.22;
+const parallaxSmoothness=0.085;
+let parallaxCurrent=0;
+let parallaxTarget=0;
+let parallaxAnimating=false;
 const prefersReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+const heroTitle=document.querySelector('.parallax-content h1');
+
+function runHeroTypingAnimation(){
+if(!heroTitle){
+return;
+}
+const text=heroTitle.textContent.trim();
+heroTitle.innerHTML='';
+const typingSpan=document.createElement('span');
+typingSpan.className='hero-title-text';
+typingSpan.style.setProperty('--hero-title-length',`${text.length}ch`);
+typingSpan.textContent=text;
+heroTitle.appendChild(typingSpan);
+const totalDuration=1800;
+window.setTimeout(()=>typingSpan.classList.add('done'),totalDuration);
+}
 
 function normalizePath(path){
 if(!path){
@@ -478,6 +523,7 @@ el.setAttribute('content',value);
 }
 });
 document.title=getTranslation('meta.title');
+runHeroTypingAnimation();
 }
 langBtn.onclick=()=>{
 lang=lang==='ru'?'en':'ru';
@@ -497,20 +543,35 @@ if(prefersReducedMotion.matches){
 parallaxBg.style.transform='translate3d(0, 0, 0)';
 return;
 }
-const rect=parallaxSection.getBoundingClientRect();
-const translate=rect.top*parallaxSpeed;
-parallaxBg.style.transform=`translate3d(0, ${translate}px, 0)`;
+const diff=parallaxTarget-parallaxCurrent;
+parallaxCurrent+=diff*parallaxSmoothness;
+parallaxBg.style.transform=`translate3d(0, ${parallaxCurrent.toFixed(2)}px, 0)`;
+
+if(Math.abs(diff)>0.1){
+requestAnimationFrame(updateParallax);
+}else{
+parallaxAnimating=false;
+}
 }
 
 function requestParallaxUpdate(){
-if(parallaxTicking){
+if(!parallaxSection||!parallaxBg){
 return;
 }
-parallaxTicking=true;
-requestAnimationFrame(()=>{
-updateParallax();
-parallaxTicking=false;
-});
+if(prefersReducedMotion.matches){
+parallaxBg.style.transform='translate3d(0, 0, 0)';
+parallaxCurrent=0;
+parallaxTarget=0;
+parallaxAnimating=false;
+return;
+}
+const rect=parallaxSection.getBoundingClientRect();
+parallaxTarget=rect.top*parallaxSpeed;
+
+if(!parallaxAnimating){
+parallaxAnimating=true;
+requestAnimationFrame(updateParallax);
+}
 }
 
 window.addEventListener('scroll',requestParallaxUpdate,{passive:true});
@@ -518,7 +579,7 @@ window.addEventListener('resize',requestParallaxUpdate);
 if(typeof prefersReducedMotion.addEventListener==='function'){
 prefersReducedMotion.addEventListener('change',requestParallaxUpdate);
 }
-updateParallax();
+requestParallaxUpdate();
 </script>
 
 </body>
