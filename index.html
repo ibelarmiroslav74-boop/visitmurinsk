@@ -353,9 +353,49 @@ color:var(--sub)
         gap: 0.12em;
     }
 
-    .hero-title-line {
+    .hero-title-line,
+    .hero-title-single {
         display: inline-block;
         white-space: normal;
+    }
+
+    .hero-title-line,
+    .hero-title-single {
+        opacity: 0;
+        transform: translateX(-26px);
+        clip-path: inset(0 100% 0 0);
+    }
+
+    .hero-title-line.is-animating,
+    .hero-title-single.is-animating {
+        animation: heroSlideReveal 0.85s cubic-bezier(.2,.65,.2,1) forwards;
+    }
+
+    .hero-title-line.is-animating:nth-child(2) {
+        animation-delay: 0.12s;
+    }
+
+    @keyframes heroSlideReveal {
+        from {
+            opacity: 0;
+            transform: translateX(-26px);
+            clip-path: inset(0 100% 0 0);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+            clip-path: inset(0 0 0 0);
+        }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .hero-title-line,
+        .hero-title-single {
+            animation: none !important;
+            opacity: 1;
+            transform: none;
+            clip-path: none;
+        }
     }
 
     @media (max-width: 600px) {
@@ -445,17 +485,34 @@ words.slice(bestIndex).join(' ')
 ].filter(Boolean);
 }
 
+function triggerHeroRevealAnimation(){
+if(!heroTitle||prefersReducedMotion.matches){
+return;
+}
+const animatedNodes=heroTitle.querySelectorAll('.hero-title-line, .hero-title-single');
+animatedNodes.forEach(node=>{
+node.classList.remove('is-animating');
+void node.offsetWidth;
+node.classList.add('is-animating');
+});
+}
+
 function runHeroTypingAnimation(){
 if(!heroTitle){
 return;
 }
 const text=heroTitle.textContent.trim();
+heroTitle.innerHTML='';
+
 if(!heroTypingIsMobile){
-heroTitle.textContent=text;
+const singleLine=document.createElement('span');
+singleLine.className='hero-title-single';
+singleLine.textContent=text;
+heroTitle.appendChild(singleLine);
+triggerHeroRevealAnimation();
 return;
 }
 
-heroTitle.innerHTML='';
 const linesWrapper=document.createElement('span');
 linesWrapper.className='hero-title-lines';
 const lines=text==='Добро пожаловать!'
@@ -470,6 +527,7 @@ linesWrapper.appendChild(lineSpan);
 });
 
 heroTitle.appendChild(linesWrapper);
+triggerHeroRevealAnimation();
 }
 
 function normalizePath(path){
