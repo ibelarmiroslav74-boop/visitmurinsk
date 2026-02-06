@@ -387,7 +387,9 @@ function normalizePath(path){
 if(!path){
 return '/';
 }
-const cleanPath=path.replace(/\/index\.html$/,'/');
+let cleanPath=path
+.replace(/\/index\.html$/,'/')
+.replace(/\.html$/,'');
 if(cleanPath===''){
 return '/';
 }
