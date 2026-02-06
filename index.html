@@ -346,24 +346,31 @@ color:var(--sub)
         overflow-wrap: anywhere;
     }
 
-    .hero-title-text {
+    .hero-title-lines {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.12em;
+    }
+
+    .hero-title-line {
         display: inline-block;
         white-space: normal;
         overflow: hidden;
         border-right: 3px solid rgba(255, 255, 255, 0.85);
         max-width: 0;
         animation:
-            heroTyping 1.8s steps(24, end) forwards,
-            heroCursor .7s step-end infinite;
+            heroTyping var(--hero-line-duration, 1.8s) steps(var(--hero-line-steps, 24), end) var(--hero-line-delay, 0ms) forwards,
+            heroCursor .7s step-end var(--hero-line-delay, 0ms) infinite;
     }
 
-    .hero-title-text.done {
+    .hero-title-line.done {
         border-right-color: transparent;
     }
 
     @keyframes heroTyping {
         from { max-width: 0; }
-        to { max-width: min(var(--hero-title-length, 24ch), 90vw); }
+        to { max-width: min(var(--hero-line-length, 24ch), 90vw); }
     }
 
     @keyframes heroCursor {
@@ -376,7 +383,11 @@ color:var(--sub)
             font-size: clamp(1.35rem, 9vw, 2.1rem);
         }
 
-        .hero-title-text {
+        .hero-title-lines {
+            width: 100%;
+        }
+
+        .hero-title-line {
             max-width: 0;
             line-height: 1.25;
         }
@@ -428,7 +439,32 @@ let parallaxCurrent=0;
 let parallaxTarget=0;
 let parallaxAnimating=false;
 const prefersReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+const mobileHeroQuery=window.matchMedia('(max-width: 600px)');
 const heroTitle=document.querySelector('.parallax-content h1');
+let heroTypingIsMobile=mobileHeroQuery.matches;
+
+function splitHeroTextIntoLines(text){
+const words=text.split(/\s+/).filter(Boolean);
+if(words.length<2){
+return [text];
+}
+const midpoint=Math.ceil(words.length/2);
+let bestIndex=midpoint;
+let bestDiff=Infinity;
+for(let i=1;i<words.length;i++){
+const left=words.slice(0,i).join(' ');
+const right=words.slice(i).join(' ');
+const diff=Math.abs(left.length-right.length);
+if(diff<bestDiff){
+bestDiff=diff;
+bestIndex=i;
+}
+}
+return [
+words.slice(0,bestIndex).join(' '),
+words.slice(bestIndex).join(' ')
+].filter(Boolean);
+}
 
 function runHeroTypingAnimation(){
 if(!heroTitle){
@@ -436,13 +472,28 @@ return;
 }
 const text=heroTitle.textContent.trim();
 heroTitle.innerHTML='';
-const typingSpan=document.createElement('span');
-typingSpan.className='hero-title-text';
-typingSpan.style.setProperty('--hero-title-length',`${text.length}ch`);
-typingSpan.textContent=text;
-heroTitle.appendChild(typingSpan);
-const totalDuration=1800;
-window.setTimeout(()=>typingSpan.classList.add('done'),totalDuration);
+const lines=heroTypingIsMobile?splitHeroTextIntoLines(text):[text];
+const linesWrapper=document.createElement('span');
+linesWrapper.className='hero-title-lines';
+let totalDuration=0;
+
+lines.forEach(line=>{
+const lineSpan=document.createElement('span');
+const lineDuration=Math.max(650,line.length*75);
+lineSpan.className='hero-title-line';
+lineSpan.style.setProperty('--hero-line-length',`${line.length}ch`);
+lineSpan.style.setProperty('--hero-line-steps',line.length);
+lineSpan.style.setProperty('--hero-line-duration',`${lineDuration}ms`);
+lineSpan.style.setProperty('--hero-line-delay',`${totalDuration}ms`);
+lineSpan.textContent=line;
+linesWrapper.appendChild(lineSpan);
+totalDuration+=lineDuration+120;
+});
+
+heroTitle.appendChild(linesWrapper);
+window.setTimeout(()=>{
+heroTitle.querySelectorAll('.hero-title-line').forEach(line=>line.classList.add('done'));
+},totalDuration);
 }
 
 function normalizePath(path){
@@ -547,6 +598,20 @@ langBtn.animate(
 );
 updateLang();
 };
+
+function handleHeroTypingResize(event){
+if(heroTypingIsMobile===event.matches){
+return;
+}
+heroTypingIsMobile=event.matches;
+runHeroTypingAnimation();
+}
+
+if(typeof mobileHeroQuery.addEventListener==='function'){
+mobileHeroQuery.addEventListener('change',handleHeroTypingResize);
+}else if(typeof mobileHeroQuery.addListener==='function'){
+mobileHeroQuery.addListener(handleHeroTypingResize);
+}
 updateLang();
 
 function updateParallax(){
