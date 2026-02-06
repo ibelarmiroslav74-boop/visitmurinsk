@@ -166,6 +166,12 @@ opacity:0;
 transform:translateY(-12px);
 transition: opacity .35s ease, transform .45s cubic-bezier(.4,0,.2,1);
 }
+nav a.active{
+text-decoration:underline;
+text-decoration-thickness:2px;
+text-underline-offset:6px;
+text-shadow:0 0 12px color-mix(in srgb,var(--text) 45%,transparent);
+}
 nav.show a{
 opacity:1;
 transform:translateY(0);
@@ -234,10 +240,31 @@ function initializeMenuFunctions() {
     const themeBtn=document.getElementById('themeBtn');
     const langBtn=document.getElementById('langBtn');
 
+    function normalizePath(path){
+    if(!path){
+    return '/';
+    }
+    const cleanPath=path.replace(/\/index\.html$/,'/');
+    if(cleanPath===''){
+    return '/';
+    }
+    return cleanPath.endsWith('/')&&cleanPath!=='/'?cleanPath.slice(0,-1):cleanPath;
+    }
+
+    function highlightActiveMenuItem(){
+    const currentPath=normalizePath(window.location.pathname);
+    document.querySelectorAll('#menu a').forEach(link=>{
+    const linkPath=normalizePath(new URL(link.getAttribute('href'),window.location.origin).pathname);
+    link.classList.toggle('active',linkPath===currentPath);
+    });
+    }
+
     menuBtn.onclick=()=>{
     menuBtn.classList.toggle('open');
     menu.classList.toggle('show');
     };
+
+    highlightActiveMenuItem();
 
     if(matchMedia('(prefers-color-scheme: dark)').matches){
     document.body.classList.add('dark');
