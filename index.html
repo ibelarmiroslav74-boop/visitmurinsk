@@ -183,13 +183,16 @@ position:absolute;
 top:100%;
 left:50%;
 transform:translateX(-50%) translateY(-10px);
-background:var(--menu);
-padding:28px 48px;
-border-radius:32px;
-box-shadow:0 18px 40px var(--shadow);
+background:linear-gradient(145deg, color-mix(in srgb, var(--menu) 82%, #fff 18%), color-mix(in srgb, var(--menu) 92%, transparent));
+backdrop-filter:blur(24px) saturate(180%);
+-webkit-backdrop-filter:blur(24px) saturate(180%);
+border:1px solid color-mix(in srgb, var(--text) 14%, transparent);
+padding:18px;
+border-radius:30px;
+box-shadow:0 18px 40px var(--shadow), inset 0 1px 0 rgba(255,255,255,.32);
 display:flex;
 flex-direction:column;
-gap:20px;
+gap:12px;
 text-align:center;
 opacity:0;
 pointer-events:none;
@@ -202,20 +205,28 @@ pointer-events:auto;
 transform:translateX(-50%) translateY(10px)
 }
 
-/* АНИМАЦИЯ ПУНКТОВ МЕНЮ */
 nav a{
 color:var(--text);
 text-decoration:none;
 font-size:12px;
+padding:14px 18px;
+border-radius:999px;
+background:linear-gradient(180deg, rgba(255,255,255,.36), rgba(255,255,255,.1));
+border:1px solid color-mix(in srgb, var(--text) 12%, transparent);
+box-shadow:inset 0 1px 0 rgba(255,255,255,.38), 0 8px 18px color-mix(in srgb, var(--shadow) 60%, transparent);
 opacity:0;
-transform:translateY(-12px);
-transition:
-opacity .35s ease,
-transform .45s cubic-bezier(.4,0,.2,1);
+transform:translateY(-12px) scale(.96);
+transition: opacity .35s ease, transform .45s cubic-bezier(.4,0,.2,1), background .25s ease;
+}
+body.dark nav a{
+background:linear-gradient(180deg, rgba(255,255,255,.14), rgba(255,255,255,.05));
+}
+nav a:hover{
+background:linear-gradient(180deg, rgba(255,255,255,.46), rgba(255,255,255,.16));
 }
 nav.show a{
 opacity:1;
-transform:translateY(0);
+transform:translateY(0) scale(1);
 }
 nav.show a:nth-child(1){transition-delay:.05s}
 nav.show a:nth-child(2){transition-delay:.1s}
