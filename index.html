@@ -412,13 +412,40 @@ color:var(--sub)
         }
     }
 
-    /* Обычный блок для контента после параллакса */
+    /* Блок с пунктом после параллакса */
     .content-after {
-        background: white;
+        background: var(--bg);
         position: relative;
         z-index: 10;
-        padding: 50px 20px;
-        min-height: 100vh;
+        padding: 56px 20px;
+    }
+
+    .content-point {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: clamp(20px, 3vw, 30px);
+        border-radius: 20px;
+        border: 1px solid color-mix(in srgb, var(--text) 30%, transparent);
+        background: color-mix(in srgb, var(--menu) 78%, transparent);
+        box-shadow: 0 10px 28px var(--shadow);
+    }
+
+    .content-point ul {
+        margin: 0;
+        padding-left: 24px;
+    }
+
+    .content-point li {
+        line-height: 1.6;
+    }
+
+    .content-point li + li {
+        margin-top: 10px;
+    }
+
+    .content-point ul ul {
+        margin-top: 10px;
+        padding-left: 22px;
     }
 </style>
 
@@ -431,10 +458,16 @@ color:var(--sub)
     </div>
     
     <div class="content-after">
-        <h2 style="text-align: center; color: #333;" data-i18n="content.title">Контент под параллаксом</h2>
-        <p style="max-width: 600px; margin: 20px auto; line-height: 1.6;">
-            <span data-i18n="content.description">Этот метод работает плавно и на ПК, и на мобильных устройствах, так как использует аппаратное ускорение видеокарты.</span>
-        </p>
+        <div class="content-point">
+            <ul>
+                <li>
+                    <span data-i18n="content.item">Муринск развивается как живой город внутри Minecraft.</span>
+                    <ul>
+                        <li data-i18n="content.subitem">Регулярно добавляются новые районы, маршруты и общественные пространства.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 </div>
 </main>
@@ -578,8 +611,8 @@ description:'Murinsk (Муринск) — город в Minecraft. Официа�
 nav:{home:'Главная',gallery:'Галерея',history:'История',review:'Оставить отзыв'},
 hero:{title:'Добро пожаловать!'},
 content:{
-title:'Контент под параллаксом',
-description:'Этот метод работает плавно и на ПК, и на мобильных устройствах, так как использует аппаратное ускорение видеокарты.'
+item:'Муринск развивается как живой город внутри Minecraft.',
+subitem:'Регулярно добавляются новые районы, маршруты и общественные пространства.'
 },
 about:{
 title:'Murinsk (Муринск) — город в Minecraft',
@@ -595,8 +628,8 @@ description:'Murinsk is a city in Minecraft. Official project website: city hist
 nav:{home:'Home',gallery:'Gallery',history:'History',review:'Leave a review'},
 hero:{title:'Welcome!'},
 content:{
-title:'Content below the parallax section',
-description:'This method works smoothly on both desktop and mobile devices because it uses hardware acceleration.'
+item:'Murinsk keeps growing as a living city inside Minecraft.',
+subitem:'New districts, routes, and public spaces are added regularly.'
 },
 about:{
 title:'Murinsk — a city in Minecraft',
