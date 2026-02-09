@@ -12,7 +12,7 @@
 <link rel="apple-touch-icon" sizes="144x144" href="/apple-icon-144x144.png">
 <link rel="apple-touch-icon" sizes="152x152" href="/apple-icon-152x152.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192"  href="/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/android-icon-192x192.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
@@ -21,9 +21,7 @@
 <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
 <meta name="theme-color" content="#ffffff">
 
-
 <title data-i18n="meta.title">Муринск — город в Minecraft</title>
-
 <meta name="description" data-i18n-content="meta.description" content="Murinsk (Муринск) — город в Minecraft. Официальный сайт проекта: история, карта города, галерея и развитие. visitmurinsk.ru">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://visitmurinsk.ru">
@@ -35,44 +33,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
 <style>
-    .cookie-banner {
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        width: 100%;
-        background: #222;
-        color: #fff;
-        padding: 15px;
-        text-align: center;
-        z-index: 9999;
-        display: none; /* Скрыто, пока JS не проверит куки */
-        font-family: sans-serif;
-    }
-    .cookie-banner button {
-        background: #f1d600;
-        color: #000;
-        border: none;
-        padding: 7px 15px;
-        margin-left: 15px;
-        cursor: pointer;
-        border-radius: 4px;
-        font-weight: bold
-    }
 :root{
 --bg:#f5f5f7;
 --text:#1d1d1f;
---sub:#6e6e73;
---glass:rgba(255,255,255,.7);
+--sub:#5e5e66;
+--glass:rgba(255,255,255,.75);
 --menu:rgba(255,255,255,.95);
 --shadow:rgba(0,0,0,.12);
+--accent:#f1d600;
 }
 body.dark{
 --bg:#0d0d0f;
 --text:#f5f5f7;
 --sub:#a1a1a6;
---glass:rgba(30,30,32,.75);
+--glass:rgba(30,30,32,.76);
 --menu:rgba(35,35,38,.95);
 --shadow:rgba(0,0,0,.45);
+--accent:#ffe14d;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{
@@ -81,13 +58,7 @@ background:var(--bg);
 color:var(--text);
 transition:.3s;
 }
-
-header{
-position:fixed;
-top:0;left:0;right:0;
-z-index:1000
-}
-
+header{position:fixed;top:0;left:0;right:0;z-index:1000}
 .header-inner{
 max-width:1200px;
 margin:14px auto;
@@ -96,383 +67,183 @@ display:flex;
 justify-content:space-between;
 align-items:center;
 background:var(--glass);
-backdrop-filter:blur(30px);
+-webkit-backdrop-filter:blur(40px) saturate(190%);
+backdrop-filter:blur(40px) saturate(190%);
 border-radius:999px;
 box-shadow:0 10px 28px var(--shadow)
 }
-
-@media (max-width:768px){
-.header-inner{
-margin:14px 14px;
-padding:14px 18px;
-}
-}
-
-.logo{
-font-family:'Unbounded',sans-serif;
-font-weight:700;
-font-size:18px;
-position:relative;
-z-index:2;
-pointer-events:auto
-}
-
+.logo{font-family:'Unbounded',sans-serif;font-weight:700;font-size:18px;text-decoration:none;color:inherit}
 .controls{display:flex;gap:10px}
-
-button{
-border:none;
-background:var(--glass);
-color:var(--text);
-cursor:pointer;
-box-shadow:0 6px 16px var(--shadow);
-display:flex;
-align-items:center;
-justify-content:center;
-}
-
-#langBtn{
-font-family:'Unbounded',sans-serif;
-width:44px;height:36px;
-border-radius:999px;
-font-size:12px;
-transition:transform .2s;
-}
+button{border:none;background:var(--glass);color:var(--text);cursor:pointer;box-shadow:0 6px 16px var(--shadow);display:flex;align-items:center;justify-content:center;-webkit-backdrop-filter:blur(30px) saturate(180%);backdrop-filter:blur(30px) saturate(180%)}
+#langBtn{font-family:'Unbounded',sans-serif;width:44px;height:36px;border-radius:999px;font-size:12px;transition:transform .2s}
 #langBtn:active{transform:scale(.9)}
-
-#themeBtn{
-width:36px;height:36px;
-border-radius:50%;
-position:relative;
-overflow:hidden;
-}
-
-#themeBtn svg{
-position:absolute;
-width:20px;
-height:20px;
-fill:currentColor;
-/* Добавлено управление трансформацией */
-transition: transform .5s cubic-bezier(.4,0,.2,1), opacity .3s;
-}
-
-/* Солнце в центре, Луна спрятана справа с поворотом */
-#sun{opacity:1; transform: translateX(0) rotate(0deg);}
-#moon{opacity:0; transform: translateX(15px) rotate(90deg);}
-
-/* При темной теме: Солнце уходит вправо, Луна встает в центр */
-body.dark #sun{opacity:0; transform: translateX(15px) rotate(90deg);}
-body.dark #moon{opacity:1; transform: translateX(0) rotate(0deg);}
-
-
-#menuBtn{
-width:36px;height:36px;
-border-radius:50%;
-position:relative
-}
-#menuBtn span{
-position:absolute;
-left:50%;top:50%;
-width:18px;height:2px;
-background:var(--text);
-transition:.25s
-}
+#themeBtn,#menuBtn{width:36px;height:36px;border-radius:50%;position:relative;overflow:hidden}
+#menuBtn{-webkit-backdrop-filter:blur(52px) saturate(220%);backdrop-filter:blur(52px) saturate(220%);background:color-mix(in srgb,var(--glass) 72%,rgba(255,255,255,.2))}
+#themeBtn svg{position:absolute;width:20px;height:20px;fill:currentColor;transition:transform .5s cubic-bezier(.4,0,.2,1),opacity .3s}
+#sun{opacity:1;transform:translateX(0) rotate(0deg)}
+#moon{opacity:0;transform:translateX(15px) rotate(90deg)}
+body.dark #sun{opacity:0;transform:translateX(15px) rotate(90deg)}
+body.dark #moon{opacity:1;transform:translateX(0) rotate(0deg)}
+#menuBtn span{position:absolute;left:50%;top:50%;width:18px;height:2px;background:var(--text);transition:.25s}
 #menuBtn span:first-child{transform:translate(-50%,-50%) translateY(-4px)}
 #menuBtn span:last-child{transform:translate(-50%,-50%) translateY(4px)}
 #menuBtn.open span:first-child{transform:translate(-50%,-50%) rotate(45deg)}
 #menuBtn.open span:last-child{transform:translate(-50%,-50%) rotate(-45deg)}
-
 nav{
-position:absolute;
-top:100%;
-left:50%;
-transform:translateX(-50%) translateY(-10px);
-background:var(--menu);
-padding:28px 48px;
-border-radius:32px;
-box-shadow:0 18px 40px var(--shadow);
-display:flex;
-flex-direction:column;
-gap:20px;
-text-align:center;
-opacity:0;
-pointer-events:none;
-transition:.3s;
-min-width:clamp(260px,70vw,420px);
+position:absolute;top:100%;left:50%;transform:translateX(-50%) translateY(-10px);
+background:var(--menu);padding:28px 48px;border-radius:32px;box-shadow:0 18px 40px var(--shadow);
+display:flex;flex-direction:column;gap:20px;text-align:center;opacity:0;pointer-events:none;transition:.3s;min-width:clamp(260px,70vw,420px);
+-webkit-backdrop-filter:blur(60px) saturate(220%);
+backdrop-filter:blur(60px) saturate(220%);
 }
-nav.show{
-opacity:1;
-pointer-events:auto;
-transform:translateX(-50%) translateY(10px)
-}
-
-/* АНИМАЦИЯ ПУНКТОВ МЕНЮ */
-nav a{
-color:var(--text);
-text-decoration:none;
-font-size:12px;
-opacity:0;
-transform:translateY(-12px);
-transition:
-opacity .35s ease,
-transform .45s cubic-bezier(.4,0,.2,1);
-}
-nav a.active{
-text-decoration:underline;
-text-decoration-thickness:2px;
-text-underline-offset:6px;
-text-shadow:0 0 12px color-mix(in srgb,var(--text) 45%,transparent);
-}
-nav.show a{
-opacity:1;
-transform:translateY(0);
-}
+nav.show{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(10px)}
+nav a{color:var(--text);text-decoration:none;font-size:12px;opacity:0;transform:translateY(-12px);transition:opacity .35s ease,transform .45s cubic-bezier(.4,0,.2,1)}
+nav a.active{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:6px}
+nav.show a{opacity:1;transform:translateY(0)}
 nav.show a:nth-child(1){transition-delay:.05s}
 nav.show a:nth-child(2){transition-delay:.1s}
 nav.show a:nth-child(3){transition-delay:.15s}
 nav.show a:nth-child(4){transition-delay:.2s}
 
-main{padding-top:0}
-section{
-max-width:960px;
-margin:80px auto;
-padding:0 20px
-}
-h1{
-font-family:'Unbounded',sans-serif;
-font-size:22px;
-margin-bottom:28px
-}
-p{
-font-size:10px;
-line-height:1.9;
-color:var(--sub);
-margin-bottom:18px
-}
-footer{
-text-align:center;
-padding:40px;
-font-size:10px;
-color:var(--sub)
-}
-  <div id="cookie-notice" class="cookie-banner">
-    <p>Мы используем файлы cookie для улучшения работы сайта. <a href="/privacy">Подробнее</a></p>
-    <button id="accept-cookies">Принять</button>
-</div>
+main{padding-bottom:70px}
+.parallax-section{position:relative;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden;--parallax-content-shift:0px;--parallax-overlay-opacity:.58}
+.parallax-bg{position:absolute;top:-10%;left:0;width:100%;height:125%;background-image:url('IMG_3489.png');background-size:cover;background-position:center;z-index:-1;will-change:transform;transform:translate3d(0,0,0)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.24),rgba(0,0,0,.72));z-index:0;opacity:var(--parallax-overlay-opacity)}
+.parallax-content{position:relative;z-index:2;color:#fff;text-align:center;padding:20px;max-width:1050px;will-change:transform;transform:translate3d(0,var(--parallax-content-shift),0)}
+.parallax-content h1{font-size:clamp(2.3rem,8vw,6rem);line-height:1.15;text-transform:uppercase;text-shadow:0 5px 15px rgba(0,0,0,.8);margin-bottom:24px}
+.hero-subtitle{font-family:'Unbounded',sans-serif;font-size:clamp(.8rem,1.8vw,1.2rem);line-height:1.7;text-shadow:0 4px 10px rgba(0,0,0,.65)}
 
+.section{max-width:1200px;margin:0 auto;padding:56px 20px}
+.section-title{font-family:'Unbounded',sans-serif;font-size:clamp(1.2rem,3vw,2rem);margin-bottom:20px}
+.section-lead{font-size:10px;color:var(--sub);line-height:2.1;margin-bottom:22px}
+
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px;margin-top:18px}
+.stat-card{background:var(--glass);border:1px solid color-mix(in srgb,var(--text) 20%,transparent);padding:18px;border-radius:18px;box-shadow:0 10px 24px var(--shadow)}
+.stat-value{font-family:'Unbounded',sans-serif;font-size:1.25rem;margin-bottom:10px;color:var(--text)}
+.stat-label{font-size:9px;color:var(--sub);line-height:1.8}
+
+.story-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.story-card{background:color-mix(in srgb,var(--menu) 82%,transparent);padding:22px;border-radius:18px;border:1px solid color-mix(in srgb,var(--text) 18%,transparent)}
+.story-card h3{font-family:'Unbounded',sans-serif;font-size:1rem;margin-bottom:14px}
+.story-card p{font-size:9px;line-height:2;color:var(--sub)}
+
+.timeline{display:grid;gap:12px;margin-top:16px}
+.timeline-item{display:grid;grid-template-columns:115px 1fr;gap:14px;background:var(--glass);padding:14px;border-radius:14px;align-items:start}
+.timeline-year{font-family:'Unbounded',sans-serif;font-size:.85rem;color:var(--text)}
+.timeline-desc{font-size:9px;color:var(--sub);line-height:1.9}
+
+.route-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.route{padding:18px;border-radius:16px;background:color-mix(in srgb,var(--glass) 80%,transparent);border:1px dashed color-mix(in srgb,var(--text) 35%,transparent)}
+.route h4{font-family:'Unbounded',sans-serif;font-size:.95rem;margin-bottom:10px}
+.route p{font-size:9px;line-height:1.9;color:var(--sub)}
+
+.cta{margin-top:20px;padding:24px;border-radius:20px;background:linear-gradient(120deg,color-mix(in srgb,var(--accent) 55%,#fff),color-mix(in srgb,var(--accent) 35%,transparent));color:#222}
+.cta p{color:#222;font-size:10px;line-height:1.8}
+
+footer{text-align:center;padding:40px;font-size:10px;color:var(--sub)}
+.cookie-banner{position:fixed;bottom:0;left:0;width:100%;background:#222;color:#fff;padding:15px;text-align:center;z-index:9999;display:none;font-family:sans-serif}
+.cookie-banner button{background:#f1d600;color:#000;border:none;padding:7px 15px;margin-left:15px;cursor:pointer;border-radius:4px;font-weight:bold}
+
+@media (max-width:768px){
+.header-inner{margin:14px 14px;padding:14px 18px}
+.parallax-content h1{font-size:clamp(1.55rem,9vw,2.5rem)}
+.hero-subtitle{font-size:12px}
+.timeline-item{grid-template-columns:1fr}
+}
 </style>
 </head>
-
 <body>
-
 <header>
-<div class="header-inner">
-<a class="logo" href="/index.html" style="text-decoration:none;color:inherit;">Murinsk</a>
+  <div class="header-inner">
+    <a class="logo" href="/index.html">Murinsk</a>
+    <div class="controls">
+      <button id="langBtn">RU</button>
+      <button id="themeBtn" aria-label="Switch theme">
+        <svg id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg id="moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/></svg>
+      </button>
+      <button id="menuBtn" aria-label="Open menu"><span></span><span></span></button>
+    </div>
 
-<div class="controls">
-<button id="langBtn">RU</button>
-
-
-<button id="themeBtn">
-<svg id="sun" viewBox="0 0 24 24">
-<circle cx="12" cy="12" r="5"/>
-<!-- Добавлены параметры stroke для отображения лучей -->
-<path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-</svg>
-<svg id="moon" viewBox="0 0 24 24">
-<path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
-</svg>
-</button>
-
-
-<button id="menuBtn"><span></span><span></span></button>
-</div>
-
-<nav id="menu">
-<a href="/" data-i18n="nav.home">Главная</a>
-<a href="/gallery.html" data-i18n="nav.gallery">Галерея</a>
-<a href="/history.html" data-i18n="nav.history">История</a>
-<a href="/review.html" data-i18n="nav.review">Оставить отзыв</a>
-</nav>
-</div>
+    <nav id="menu">
+      <a href="/" data-i18n="nav.home">Главная</a>
+      <a href="/gallery.html" data-i18n="nav.gallery">Галерея</a>
+      <a href="/history.html" data-i18n="nav.history">История</a>
+      <a href="/review.html" data-i18n="nav.review">Оставить отзыв</a>
+    </nav>
+  </div>
 </header>
 
 <main>
-    <style>
-    /* Настройки контейнера для параллакса */
-    .parallax-wrapper {
-        overflow: hidden;
-    }
-.parallax-section {
-    position: relative;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden; /* Обрезает лишнее */
-}
-
-    .parallax-bg {
-    position: absolute;
-    top: -10%;
-    left: 0;
-    width: 100%;
-    height: 120%;
-    background-image: url('IMG_3489.png');
-    background-size: cover;
-    background-position: center;
-    background-attachment: scroll;
-    z-index: -1;
-    will-change: transform;
-    transform: translate3d(0, 0, 0);
-}
-
-
-    /* Текст */
-    .parallax-content {
-        color: white;
-        text-align: center;
-        font-family: sans-serif;
-        padding: 20px;
-    }
-
-.parallax-content h1 {
-        font-size: clamp(2rem, 8vw, 5rem); /* Адаптивный размер шрифта */
-        line-height: 1.15;
-        text-transform: uppercase;
-        text-shadow: 0px 5px 15px rgba(0, 0, 0, 0.8);
-        margin: 0;
-        min-height: 1.2em;
-        max-width: 100%;
-        overflow-wrap: anywhere;
-    }
-
-    .hero-title-lines {
-        display: inline-flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.12em;
-    }
-
-    .hero-title-line,
-    .hero-title-single {
-        display: inline-block;
-        white-space: normal;
-    }
-
-    .hero-title-line,
-    .hero-title-single {
-        opacity: 0;
-        transform: translateX(-26px);
-        clip-path: inset(0 100% 0 0);
-    }
-
-    .hero-title-line.is-animating,
-    .hero-title-single.is-animating {
-        animation: heroSlideReveal 0.85s cubic-bezier(.2,.65,.2,1) forwards;
-    }
-
-    .hero-title-line.is-animating:nth-child(2) {
-        animation-delay: 0.12s;
-    }
-
-    @keyframes heroSlideReveal {
-        from {
-            opacity: 0;
-            transform: translateX(-26px);
-            clip-path: inset(0 100% 0 0);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-            clip-path: inset(0 0 0 0);
-        }
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-        .hero-title-line,
-        .hero-title-single {
-            animation: none !important;
-            opacity: 1;
-            transform: none;
-            clip-path: none;
-        }
-    }
-
-    @media (max-width: 600px) {
-        .parallax-content h1 {
-            font-size: clamp(1.35rem, 9vw, 2.1rem);
-        }
-
-        .hero-title-lines {
-            width: 100%;
-        }
-
-        .hero-title-line {
-            line-height: 1.25;
-        }
-    }
-
-    /* Блок с пунктом после параллакса */
-    .content-after {
-        background: var(--bg);
-        position: relative;
-        z-index: 10;
-        padding: 56px 20px;
-    }
-
-    .content-point {
-        max-width: 720px;
-        margin: 0 auto;
-        padding: clamp(20px, 3vw, 30px);
-        border-radius: 20px;
-        border: 1px solid color-mix(in srgb, var(--text) 30%, transparent);
-        background: color-mix(in srgb, var(--menu) 78%, transparent);
-        box-shadow: 0 10px 28px var(--shadow);
-    }
-
-    .content-point ul {
-        margin: 0;
-        padding-left: 24px;
-    }
-
-    .content-point li {
-        line-height: 1.6;
-    }
-
-    .content-point li + li {
-        margin-top: 10px;
-    }
-
-    .content-point ul ul {
-        margin-top: 10px;
-        padding-left: 22px;
-    }
-</style>
-
-<div class="parallax-wrapper">
-    <div class="parallax-section">
-        <div class="parallax-bg"></div>
-        <div class="parallax-content">
-            <h1 data-i18n="hero.title">Добро пожаловать!</h1>
-        </div>
+  <section class="parallax-section">
+    <div class="parallax-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="parallax-content">
+      <h1 data-i18n="hero.title">Муринск: город, который живёт</h1>
+      <p class="hero-subtitle" data-i18n="hero.subtitle">Большая интерактивная презентация: районы, архитектура, история, транспорт, планы развития и сообщество.</p>
     </div>
-    
-    <div class="content-after">
-        <div class="content-point">
-            <ul>
-                <li>
-                    <span data-i18n="content.item">Муринск развивается как живой город внутри Minecraft.</span>
-                    <ul>
-                        <li data-i18n="content.subitem">Регулярно добавляются новые районы, маршруты и общественные пространства.</li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title" data-i18n="overview.title">Муринск в цифрах</h2>
+    <p class="section-lead" data-i18n="overview.lead">Это не просто карта из блоков — это полноценная городская экосистема с узнаваемыми местами, логикой застройки и постоянным обновлением.</p>
+    <div class="stats-grid">
+      <article class="stat-card"><div class="stat-value" data-i18n="stats.0.value">12+</div><div class="stat-label" data-i18n="stats.0.label">уникальных районов с разной атмосферой</div></article>
+      <article class="stat-card"><div class="stat-value" data-i18n="stats.1.value">80+</div><div class="stat-label" data-i18n="stats.1.label">зданий с проработанными интерьерами</div></article>
+      <article class="stat-card"><div class="stat-value" data-i18n="stats.2.value">24/7</div><div class="stat-label" data-i18n="stats.2.label">город открыт для прогулок и изучения</div></article>
+      <article class="stat-card"><div class="stat-value" data-i18n="stats.3.value">100%</div><div class="stat-label" data-i18n="stats.3.label">ручная проработка кварталов и маршрутов</div></article>
     </div>
-</div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title" data-i18n="districts.title">Районы и характер города</h2>
+    <div class="story-grid">
+      <article class="story-card">
+        <h3 data-i18n="districts.0.title">Исторический центр</h3>
+        <p data-i18n="districts.0.text">Площадь, проспекты, набережная и первые здания Муринска. Здесь проще всего почувствовать стиль города: сочетание классики, современных решений и пиксельной эстетики Minecraft.</p>
+      </article>
+      <article class="story-card">
+        <h3 data-i18n="districts.1.title">Новые кварталы</h3>
+        <p data-i18n="districts.1.text">Современные жилые блоки, общественные пространства и акценты на удобстве. Районы строятся с упором на целостную среду: от дворов до видовых точек.</p>
+      </article>
+      <article class="story-card">
+        <h3 data-i18n="districts.2.title">Культурная линия</h3>
+        <p data-i18n="districts.2.text">Музейные площадки, парки, галерейные пространства и сцены для событий. Эта зона объединяет творческие идеи и подчеркивает идентичность проекта.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title" data-i18n="timeline.title">История развития</h2>
+    <p class="section-lead" data-i18n="timeline.lead">Муринск растёт как настоящий город — этап за этапом, с сохранением контекста и добавлением новых функций.</p>
+    <div class="timeline">
+      <div class="timeline-item"><div class="timeline-year" data-i18n="timeline.items.0.year">2021</div><div class="timeline-desc" data-i18n="timeline.items.0.text">Запуск базовой карты, первых улиц и центрального узла.</div></div>
+      <div class="timeline-item"><div class="timeline-year" data-i18n="timeline.items.1.year">2022</div><div class="timeline-desc" data-i18n="timeline.items.1.text">Появление первых общественных пространств, скверов и пешеходных маршрутов.</div></div>
+      <div class="timeline-item"><div class="timeline-year" data-i18n="timeline.items.2.year">2023</div><div class="timeline-desc" data-i18n="timeline.items.2.text">Расширение на новые районы, детализация фасадов, улучшение навигации города.</div></div>
+      <div class="timeline-item"><div class="timeline-year" data-i18n="timeline.items.3.year">2024–2026</div><div class="timeline-desc" data-i18n="timeline.items.3.text">Масштабирование, развитие культурного каркаса и подготовка к следующим крупным релизам.</div></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <h2 class="section-title" data-i18n="routes.title">Маршруты для первого визита</h2>
+    <div class="route-list">
+      <article class="route"><h4 data-i18n="routes.items.0.title">Панорамный</h4><p data-i18n="routes.items.0.text">Маршрут через высокие точки города: обзор кварталов, мостов и общих силуэтов.</p></article>
+      <article class="route"><h4 data-i18n="routes.items.1.title">Архитектурный</h4><p data-i18n="routes.items.1.text">Прогулка по знаковым зданиям и улицам, где лучше всего видно стиль и пропорции Муринска.</p></article>
+      <article class="route"><h4 data-i18n="routes.items.2.title">Вечерний</h4><p data-i18n="routes.items.2.text">Ночной тур по подсветке, центральным площадям и набережной с атмосферными видами.</p></article>
+      <article class="route"><h4 data-i18n="routes.items.3.title">Для новичков</h4><p data-i18n="routes.items.3.text">Короткая и насыщенная прогулка, чтобы за 15 минут понять структуру и темп города.</p></article>
+    </div>
+    <div class="cta">
+      <p data-i18n="cta.text">Хочешь увидеть Муринск с разных сторон? Начни с главных маршрутов, загляни в галерею, прочитай историю развития и оставь отзыв — проект растёт вместе с сообществом.</p>
+    </div>
+  </section>
 </main>
 
-<footer data-i18n="footer">© Murinsk 2026 · All rights reserved</footer>
+<footer data-i18n="footer">© Murinsk 2026 · Все права защищены</footer>
+
+<div id="cookie-notice" class="cookie-banner">
+  <p>Мы используем файлы cookie для улучшения работы сайта. <a href="/privacy">Подробнее</a></p>
+  <button id="accept-cookies">Принять</button>
+</div>
 
 <script>
 const menuBtn=document.getElementById('menuBtn');
@@ -481,94 +252,18 @@ const themeBtn=document.getElementById('themeBtn');
 const langBtn=document.getElementById('langBtn');
 const parallaxSection=document.querySelector('.parallax-section');
 const parallaxBg=document.querySelector('.parallax-bg');
-const parallaxSpeed=0.22;
+const prefersReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+const parallaxSpeed=0.32;
+const parallaxContentSpeed=0.12;
 const parallaxSmoothness=0.085;
 let parallaxCurrent=0;
 let parallaxTarget=0;
 let parallaxAnimating=false;
-const prefersReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
-const mobileHeroQuery=window.matchMedia('(max-width: 600px)');
-const heroTitle=document.querySelector('.parallax-content h1');
-let heroTypingIsMobile=mobileHeroQuery.matches;
-
-function splitHeroTextIntoLines(text){
-const words=text.split(/\s+/).filter(Boolean);
-if(words.length<2){
-return [text];
-}
-const midpoint=Math.ceil(words.length/2);
-let bestIndex=midpoint;
-let bestDiff=Infinity;
-for(let i=1;i<words.length;i++){
-const left=words.slice(0,i).join(' ');
-const right=words.slice(i).join(' ');
-const diff=Math.abs(left.length-right.length);
-if(diff<bestDiff){
-bestDiff=diff;
-bestIndex=i;
-}
-}
-return [
-words.slice(0,bestIndex).join(' '),
-words.slice(bestIndex).join(' ')
-].filter(Boolean);
-}
-
-function triggerHeroRevealAnimation(){
-if(!heroTitle||prefersReducedMotion.matches){
-return;
-}
-const animatedNodes=heroTitle.querySelectorAll('.hero-title-line, .hero-title-single');
-animatedNodes.forEach(node=>{
-node.classList.remove('is-animating');
-void node.offsetWidth;
-node.classList.add('is-animating');
-});
-}
-
-function runHeroTypingAnimation(){
-if(!heroTitle){
-return;
-}
-const text=heroTitle.textContent.trim();
-heroTitle.innerHTML='';
-
-if(!heroTypingIsMobile){
-const singleLine=document.createElement('span');
-singleLine.className='hero-title-single';
-singleLine.textContent=text;
-heroTitle.appendChild(singleLine);
-triggerHeroRevealAnimation();
-return;
-}
-
-const linesWrapper=document.createElement('span');
-linesWrapper.className='hero-title-lines';
-const lines=text==='Добро пожаловать!'
-?['Добро','пожаловать!']
-:splitHeroTextIntoLines(text);
-
-lines.forEach(line=>{
-const lineSpan=document.createElement('span');
-lineSpan.className='hero-title-line';
-lineSpan.textContent=line;
-linesWrapper.appendChild(lineSpan);
-});
-
-heroTitle.appendChild(linesWrapper);
-triggerHeroRevealAnimation();
-}
 
 function normalizePath(path){
-if(!path){
-return '/';
-}
-let cleanPath=path
-.replace(/\/index\.html$/,'/')
-.replace(/\.html$/,'');
-if(cleanPath===''){
-return '/';
-}
+if(!path){return '/';}
+let cleanPath=path.replace(/\/index\.html$/,'/').replace(/\.html$/,'');
+if(cleanPath===''){return '/';}
 return cleanPath.endsWith('/')&&cleanPath!=='/'?cleanPath.slice(0,-1):cleanPath;
 }
 
@@ -580,11 +275,7 @@ link.classList.toggle('active',linkPath===currentPath);
 });
 }
 
-menuBtn.onclick=()=>{
-menuBtn.classList.toggle('open');
-menu.classList.toggle('show');
-};
-
+menuBtn.onclick=()=>{menuBtn.classList.toggle('open');menu.classList.toggle('show');};
 highlightActiveMenuItem();
 
 const savedTheme=sessionStorage.getItem('theme');
@@ -595,7 +286,6 @@ document.body.classList.remove('dark');
 }else if(matchMedia('(prefers-color-scheme: dark)').matches){
 document.body.classList.add('dark');
 }
-
 themeBtn.onclick=()=>{
 const isDark=document.body.classList.toggle('dark');
 sessionStorage.setItem('theme',isDark?'dark':'light');
@@ -604,37 +294,79 @@ sessionStorage.setItem('theme',isDark?'dark':'light');
 let lang='ru';
 const translations={
 ru:{
-meta:{
-title:'Муринск — город в Minecraft',
-description:'Murinsk (Муринск) — город в Minecraft. Официальный сайт проекта: история, карта города, галерея и развитие. visitmurinsk.ru'
-},
+meta:{title:'Муринск — город в Minecraft',description:'Murinsk (Муринск) — город в Minecraft. Официальный сайт проекта: история, карта города, галерея и развитие. visitmurinsk.ru'},
 nav:{home:'Главная',gallery:'Галерея',history:'История',review:'Оставить отзыв'},
-hero:{title:'Добро пожаловать!'},
-content:{
-item:'Муринск развивается как живой город внутри Minecraft.',
-subitem:'Регулярно добавляются новые районы, маршруты и общественные пространства.'
+hero:{title:'Муринск: город, который живёт',subtitle:'Большая интерактивная презентация: районы, архитектура, история, транспорт, планы развития и сообщество.'},
+overview:{title:'Муринск в цифрах',lead:'Это не просто карта из блоков — это полноценная городская экосистема с узнаваемыми местами, логикой застройки и постоянным обновлением.'},
+stats:[
+{value:'12+',label:'уникальных районов с разной атмосферой'},
+{value:'80+',label:'зданий с проработанными интерьерами'},
+{value:'24/7',label:'город открыт для прогулок и изучения'},
+{value:'100%',label:'ручная проработка кварталов и маршрутов'}
+],
+districts:[
+{title:'Исторический центр',text:'Площадь, проспекты, набережная и первые здания Муринска. Здесь проще всего почувствовать стиль города: сочетание классики, современных решений и пиксельной эстетики Minecraft.'},
+{title:'Новые кварталы',text:'Современные жилые блоки, общественные пространства и акценты на удобстве. Районы строятся с упором на целостную среду: от дворов до видовых точек.'},
+{title:'Культурная линия',text:'Музейные площадки, парки, галерейные пространства и сцены для событий. Эта зона объединяет творческие идеи и подчеркивает идентичность проекта.'}
+],
+timeline:{
+title:'История развития',
+lead:'Муринск растёт как настоящий город — этап за этапом, с сохранением контекста и добавлением новых функций.',
+items:[
+{year:'2021',text:'Запуск базовой карты, первых улиц и центрального узла.'},
+{year:'2022',text:'Появление первых общественных пространств, скверов и пешеходных маршрутов.'},
+{year:'2023',text:'Расширение на новые районы, детализация фасадов, улучшение навигации города.'},
+{year:'2024–2026',text:'Масштабирование, развитие культурного каркаса и подготовка к следующим крупным релизам.'}
+]
 },
-about:{
-title:'Murinsk (Муринск) — город в Minecraft',
-description:'Murinsk — это город в Minecraft.'
+routes:{
+title:'Маршруты для первого визита',
+items:[
+{title:'Панорамный',text:'Маршрут через высокие точки города: обзор кварталов, мостов и общих силуэтов.'},
+{title:'Архитектурный',text:'Прогулка по знаковым зданиям и улицам, где лучше всего видно стиль и пропорции Муринска.'},
+{title:'Вечерний',text:'Ночной тур по подсветке, центральным площадям и набережной с атмосферными видами.'},
+{title:'Для новичков',text:'Короткая и насыщенная прогулка, чтобы за 15 минут понять структуру и темп города.'}
+]
 },
+cta:{text:'Хочешь увидеть Муринск с разных сторон? Начни с главных маршрутов, загляни в галерею, прочитай историю развития и оставь отзыв — проект растёт вместе с сообществом.'},
 footer:'© Murinsk 2026 · Все права защищены'
 },
 en:{
-meta:{
-title:'Murinsk — a city in Minecraft',
-description:'Murinsk is a city in Minecraft. Official project website: city history, map, gallery, and development. visitmurinsk.ru'
-},
+meta:{title:'Murinsk — a city in Minecraft',description:'Murinsk is a city in Minecraft. Official project website: city history, map, gallery, and development. visitmurinsk.ru'},
 nav:{home:'Home',gallery:'Gallery',history:'History',review:'Leave a review'},
-hero:{title:'Welcome!'},
-content:{
-item:'Murinsk keeps growing as a living city inside Minecraft.',
-subitem:'New districts, routes, and public spaces are added regularly.'
+hero:{title:'Murinsk: a city that feels alive',subtitle:'A large interactive presentation: districts, architecture, history, transport, development plans, and community.'},
+overview:{title:'Murinsk in numbers',lead:'This is not just a map made of blocks — it is a full urban ecosystem with recognizable places, coherent planning, and constant growth.'},
+stats:[
+{value:'12+',label:'distinct districts with different vibes'},
+{value:'80+',label:'buildings with detailed interiors'},
+{value:'24/7',label:'the city is open for exploration anytime'},
+{value:'100%',label:'handcrafted blocks, routes, and details'}
+],
+districts:[
+{title:'Historic center',text:'Main square, avenues, waterfront, and the first buildings of Murinsk. This is where the city style is most visible: classic lines, modern ideas, and Minecraft pixel aesthetics.'},
+{title:'New quarters',text:'Modern residential blocks, public spaces, and comfort-first planning. These areas are designed as complete neighborhoods from courtyards to view points.'},
+{title:'Cultural line',text:'Museum-like zones, parks, gallery spaces, and stages for events. This area brings creative energy and reinforces the project identity.'}
+],
+timeline:{
+title:'Development timeline',
+lead:'Murinsk grows like a real city — stage by stage, preserving context while adding new functions.',
+items:[
+{year:'2021',text:'Launch of the base map, first streets, and central hub.'},
+{year:'2022',text:'Creation of first public spaces, squares, and walking routes.'},
+{year:'2023',text:'Expansion to new districts, facade detailing, and improved city navigation.'},
+{year:'2024–2026',text:'Scaling up, strengthening the cultural framework, and preparing major next releases.'}
+]
 },
-about:{
-title:'Murinsk — a city in Minecraft',
-description:'Murinsk is a city in Minecraft.'
+routes:{
+title:'Routes for your first visit',
+items:[
+{title:'Panoramic',text:'A route through elevated points with views of districts, bridges, and city silhouettes.'},
+{title:'Architectural',text:'A walk through key buildings and streets where Murinsk’s style and proportions stand out.'},
+{title:'Evening',text:'A night tour of lights, central squares, and waterfront atmosphere.'},
+{title:'Beginner-friendly',text:'A short but rich walk to understand the city structure and rhythm in 15 minutes.'}
+]
 },
+cta:{text:'Want to see Murinsk from different angles? Start with the key routes, open the gallery, read the history, and leave a review — the project grows with the community.'},
 footer:'© Murinsk 2026 · All rights reserved'
 }
 };
@@ -648,83 +380,53 @@ langBtn.textContent=lang.toUpperCase();
 document.querySelectorAll('[data-i18n]').forEach(el=>{
 const key=el.dataset.i18n;
 const value=getTranslation(key);
-if(typeof value==='string'){
-el.textContent=value;
-}
+if(typeof value==='string'){el.textContent=value;}
 });
 document.querySelectorAll('[data-i18n-content]').forEach(el=>{
 const key=el.dataset.i18nContent;
 const value=getTranslation(key);
-if(typeof value==='string'){
-el.setAttribute('content',value);
-}
+if(typeof value==='string'){el.setAttribute('content',value);}
 });
 document.title=getTranslation('meta.title');
-runHeroTypingAnimation();
 }
+
 langBtn.onclick=()=>{
 lang=lang==='ru'?'en':'ru';
-langBtn.animate(
-[{transform:'scale(1)'},{transform:'scale(1.15)'},{transform:'scale(1)'}],
-{duration:200}
-);
+langBtn.animate([{transform:'scale(1)'},{transform:'scale(1.15)'},{transform:'scale(1)'}],{duration:200});
 updateLang();
 };
-
-function handleHeroTypingResize(event){
-if(heroTypingIsMobile===event.matches){
-return;
-}
-heroTypingIsMobile=event.matches;
-runHeroTypingAnimation();
-}
-
-if(typeof mobileHeroQuery.addEventListener==='function'){
-mobileHeroQuery.addEventListener('change',handleHeroTypingResize);
-}else if(typeof mobileHeroQuery.addListener==='function'){
-mobileHeroQuery.addListener(handleHeroTypingResize);
-}
 updateLang();
 
 function updateParallax(){
-if(!parallaxSection||!parallaxBg){
-return;
-}
+if(!parallaxSection||!parallaxBg){return;}
 if(prefersReducedMotion.matches){
-parallaxBg.style.transform='translate3d(0, 0, 0)';
+parallaxBg.style.transform='translate3d(0,0,0)';
+parallaxSection.style.setProperty('--parallax-content-shift','0px');
+parallaxSection.style.setProperty('--parallax-overlay-opacity','.58');
 return;
 }
 const diff=parallaxTarget-parallaxCurrent;
 parallaxCurrent+=diff*parallaxSmoothness;
 parallaxBg.style.transform=`translate3d(0, ${parallaxCurrent.toFixed(2)}px, 0)`;
-
-if(Math.abs(diff)>0.1){
-requestAnimationFrame(updateParallax);
-}else{
-parallaxAnimating=false;
-}
+parallaxSection.style.setProperty('--parallax-content-shift',`${(-parallaxCurrent*parallaxContentSpeed).toFixed(2)}px`);
+const overlayOpacity=Math.min(0.78,Math.max(0.45,0.58+Math.abs(parallaxCurrent)*0.0012));
+parallaxSection.style.setProperty('--parallax-overlay-opacity',overlayOpacity.toFixed(3));
+if(Math.abs(diff)>0.1){requestAnimationFrame(updateParallax);}else{parallaxAnimating=false;}
 }
 
 function requestParallaxUpdate(){
-if(!parallaxSection||!parallaxBg){
-return;
-}
+if(!parallaxSection||!parallaxBg){return;}
 if(prefersReducedMotion.matches){
-parallaxBg.style.transform='translate3d(0, 0, 0)';
-parallaxCurrent=0;
-parallaxTarget=0;
-parallaxAnimating=false;
+parallaxBg.style.transform='translate3d(0,0,0)';
+parallaxSection.style.setProperty('--parallax-content-shift','0px');
+parallaxSection.style.setProperty('--parallax-overlay-opacity','.58');
+parallaxCurrent=0;parallaxTarget=0;parallaxAnimating=false;
 return;
 }
 const rect=parallaxSection.getBoundingClientRect();
 parallaxTarget=rect.top*parallaxSpeed;
-
-if(!parallaxAnimating){
-parallaxAnimating=true;
-requestAnimationFrame(updateParallax);
+if(!parallaxAnimating){parallaxAnimating=true;requestAnimationFrame(updateParallax);}
 }
-}
-
 window.addEventListener('scroll',requestParallaxUpdate,{passive:true});
 window.addEventListener('resize',requestParallaxUpdate);
 if(typeof prefersReducedMotion.addEventListener==='function'){
@@ -732,6 +434,5 @@ prefersReducedMotion.addEventListener('change',requestParallaxUpdate);
 }
 requestParallaxUpdate();
 </script>
-
 </body>
 </html>
