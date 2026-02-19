@@ -376,6 +376,7 @@ border-radius:16px;
 overflow:hidden;
 background:linear-gradient(140deg,color-mix(in srgb,var(--sub) 22%,transparent),color-mix(in srgb,var(--bg) 90%,white 10%));
 display:block;
+position:relative;
 }
 .photo-slot img{
 width:100%;
@@ -383,11 +384,21 @@ height:100%;
 object-fit:cover;
 display:block;
 }
+.photo-overlay{
+position:absolute;
+inset:0;
+display:flex;
+align-items:flex-end;
+justify-content:flex-start;
+padding:16px;
+background:linear-gradient(180deg,transparent 48%,rgba(0,0,0,.55) 100%);
+}
 .photo-caption{
-font-size:10px;
-line-height:1.9;
-color:var(--sub);
-margin-top:12px;
+font-family:'Unbounded',sans-serif;
+font-size:clamp(.72rem,1.45vw,.98rem);
+line-height:1.35;
+color:#fff;
+text-shadow:0 5px 14px rgba(0,0,0,.6);
 }
 h1{
 font-family:'Unbounded',sans-serif;
@@ -464,40 +475,40 @@ width:100%;
 <section>
 <h1 class="visually-hidden" data-ru>Снимки города</h1>
 <h1 class="visually-hidden" data-en>City snapshots</h1>
-<p data-ru>Галерея с 30 широкими блоками. В каждый блок можно легко вставить фото: просто замените src у тега img.</p>
-<p data-en>Gallery with 30 wide blocks. You can easily insert photos into each block: just replace the img src.</p>
+<p data-ru>Галерея из 30 широких фотографий. Название каждого кадра размещено прямо на фото внизу слева.</p>
+<p data-en>Gallery of 30 wide photos. The title of each shot is placed directly on the photo in the bottom-left corner.</p>
 
 <div class="gallery-grid">
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-01.jpg" alt="Фото 1 — Панорама Муринска"></div><figcaption class="photo-caption" data-ru>Фото 1 — Панорама Муринска</figcaption><figcaption class="photo-caption" data-en>Photo 1 — Murinsk panorama</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-02.jpg" alt="Фото 2 — Центральная площадь"></div><figcaption class="photo-caption" data-ru>Фото 2 — Центральная площадь</figcaption><figcaption class="photo-caption" data-en>Photo 2 — Central square</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-03.jpg" alt="Фото 3 — Главная улица"></div><figcaption class="photo-caption" data-ru>Фото 3 — Главная улица</figcaption><figcaption class="photo-caption" data-en>Photo 3 — Main street</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-04.jpg" alt="Фото 4 — Жилой квартал"></div><figcaption class="photo-caption" data-ru>Фото 4 — Жилой квартал</figcaption><figcaption class="photo-caption" data-en>Photo 4 — Residential district</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-05.jpg" alt="Фото 5 — Набережная"></div><figcaption class="photo-caption" data-ru>Фото 5 — Набережная</figcaption><figcaption class="photo-caption" data-en>Photo 5 — Embankment</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-06.jpg" alt="Фото 6 — Мост через реку"></div><figcaption class="photo-caption" data-ru>Фото 6 — Мост через реку</figcaption><figcaption class="photo-caption" data-en>Photo 6 — Bridge over the river</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-07.jpg" alt="Фото 7 — Парк"></div><figcaption class="photo-caption" data-ru>Фото 7 — Парк</figcaption><figcaption class="photo-caption" data-en>Photo 7 — Park</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-08.jpg" alt="Фото 8 — Стадион"></div><figcaption class="photo-caption" data-ru>Фото 8 — Стадион</figcaption><figcaption class="photo-caption" data-en>Photo 8 — Stadium</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-09.jpg" alt="Фото 9 — Школа"></div><figcaption class="photo-caption" data-ru>Фото 9 — Школа</figcaption><figcaption class="photo-caption" data-en>Photo 9 — School</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-10.jpg" alt="Фото 10 — Библиотека"></div><figcaption class="photo-caption" data-ru>Фото 10 — Библиотека</figcaption><figcaption class="photo-caption" data-en>Photo 10 — Library</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-11.jpg" alt="Фото 11 — Музей"></div><figcaption class="photo-caption" data-ru>Фото 11 — Музей</figcaption><figcaption class="photo-caption" data-en>Photo 11 — Museum</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-12.jpg" alt="Фото 12 — Театр"></div><figcaption class="photo-caption" data-ru>Фото 12 — Театр</figcaption><figcaption class="photo-caption" data-en>Photo 12 — Theatre</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-13.jpg" alt="Фото 13 — Рынок"></div><figcaption class="photo-caption" data-ru>Фото 13 — Рынок</figcaption><figcaption class="photo-caption" data-en>Photo 13 — Market</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-14.jpg" alt="Фото 14 — Кафе"></div><figcaption class="photo-caption" data-ru>Фото 14 — Кафе</figcaption><figcaption class="photo-caption" data-en>Photo 14 — Cafe</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-15.jpg" alt="Фото 15 — Башня"></div><figcaption class="photo-caption" data-ru>Фото 15 — Башня</figcaption><figcaption class="photo-caption" data-en>Photo 15 — Tower</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-16.jpg" alt="Фото 16 — Вокзал"></div><figcaption class="photo-caption" data-ru>Фото 16 — Вокзал</figcaption><figcaption class="photo-caption" data-en>Photo 16 — Station</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-17.jpg" alt="Фото 17 — Метро"></div><figcaption class="photo-caption" data-ru>Фото 17 — Метро</figcaption><figcaption class="photo-caption" data-en>Photo 17 — Metro</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-18.jpg" alt="Фото 18 — Мэрия"></div><figcaption class="photo-caption" data-ru>Фото 18 — Мэрия</figcaption><figcaption class="photo-caption" data-en>Photo 18 — City hall</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-19.jpg" alt="Фото 19 — Порт"></div><figcaption class="photo-caption" data-ru>Фото 19 — Порт</figcaption><figcaption class="photo-caption" data-en>Photo 19 — Port</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-20.jpg" alt="Фото 20 — Промзона"></div><figcaption class="photo-caption" data-ru>Фото 20 — Промзона</figcaption><figcaption class="photo-caption" data-en>Photo 20 — Industrial zone</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-21.jpg" alt="Фото 21 — Рассвет"></div><figcaption class="photo-caption" data-ru>Фото 21 — Рассвет</figcaption><figcaption class="photo-caption" data-en>Photo 21 — Sunrise</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-22.jpg" alt="Фото 22 — Закат"></div><figcaption class="photo-caption" data-ru>Фото 22 — Закат</figcaption><figcaption class="photo-caption" data-en>Photo 22 — Sunset</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-23.jpg" alt="Фото 23 — Ночная подсветка"></div><figcaption class="photo-caption" data-ru>Фото 23 — Ночная подсветка</figcaption><figcaption class="photo-caption" data-en>Photo 23 — Night lights</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-24.jpg" alt="Фото 24 — Площадь зимой"></div><figcaption class="photo-caption" data-ru>Фото 24 — Площадь зимой</figcaption><figcaption class="photo-caption" data-en>Photo 24 — Winter square</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-25.jpg" alt="Фото 25 — Весенний парк"></div><figcaption class="photo-caption" data-ru>Фото 25 — Весенний парк</figcaption><figcaption class="photo-caption" data-en>Photo 25 — Spring park</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-26.jpg" alt="Фото 26 — Летний фестиваль"></div><figcaption class="photo-caption" data-ru>Фото 26 — Летний фестиваль</figcaption><figcaption class="photo-caption" data-en>Photo 26 — Summer festival</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-27.jpg" alt="Фото 27 — Осенние аллеи"></div><figcaption class="photo-caption" data-ru>Фото 27 — Осенние аллеи</figcaption><figcaption class="photo-caption" data-en>Photo 27 — Autumn alleys</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-28.jpg" alt="Фото 28 — Ратуша вечером"></div><figcaption class="photo-caption" data-ru>Фото 28 — Ратуша вечером</figcaption><figcaption class="photo-caption" data-en>Photo 28 — Town hall in the evening</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-29.jpg" alt="Фото 29 — Высотный район"></div><figcaption class="photo-caption" data-ru>Фото 29 — Высотный район</figcaption><figcaption class="photo-caption" data-en>Photo 29 — High-rise district</figcaption></figure>
-<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-30.jpg" alt="Фото 30 — Вид с воздуха"></div><figcaption class="photo-caption" data-ru>Фото 30 — Вид с воздуха</figcaption><figcaption class="photo-caption" data-en>Photo 30 — Aerial view</figcaption></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-01.jpg" alt="Фото 1 — Панорама Муринска"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 1 — Панорама Муринска</span><span class="photo-caption" data-en>Photo 1 — Murinsk panorama</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-02.jpg" alt="Фото 2 — Центральная площадь"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 2 — Центральная площадь</span><span class="photo-caption" data-en>Photo 2 — Central square</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-03.jpg" alt="Фото 3 — Главная улица"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 3 — Главная улица</span><span class="photo-caption" data-en>Photo 3 — Main street</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-04.jpg" alt="Фото 4 — Жилой квартал"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 4 — Жилой квартал</span><span class="photo-caption" data-en>Photo 4 — Residential district</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-05.jpg" alt="Фото 5 — Набережная"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 5 — Набережная</span><span class="photo-caption" data-en>Photo 5 — Embankment</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-06.jpg" alt="Фото 6 — Мост через реку"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 6 — Мост через реку</span><span class="photo-caption" data-en>Photo 6 — Bridge over the river</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-07.jpg" alt="Фото 7 — Парк"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 7 — Парк</span><span class="photo-caption" data-en>Photo 7 — Park</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-08.jpg" alt="Фото 8 — Стадион"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 8 — Стадион</span><span class="photo-caption" data-en>Photo 8 — Stadium</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-09.jpg" alt="Фото 9 — Школа"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 9 — Школа</span><span class="photo-caption" data-en>Photo 9 — School</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-10.jpg" alt="Фото 10 — Библиотека"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 10 — Библиотека</span><span class="photo-caption" data-en>Photo 10 — Library</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-11.jpg" alt="Фото 11 — Музей"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 11 — Музей</span><span class="photo-caption" data-en>Photo 11 — Museum</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-12.jpg" alt="Фото 12 — Театр"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 12 — Театр</span><span class="photo-caption" data-en>Photo 12 — Theatre</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-13.jpg" alt="Фото 13 — Рынок"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 13 — Рынок</span><span class="photo-caption" data-en>Photo 13 — Market</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-14.jpg" alt="Фото 14 — Кафе"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 14 — Кафе</span><span class="photo-caption" data-en>Photo 14 — Cafe</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-15.jpg" alt="Фото 15 — Башня"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 15 — Башня</span><span class="photo-caption" data-en>Photo 15 — Tower</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-16.jpg" alt="Фото 16 — Вокзал"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 16 — Вокзал</span><span class="photo-caption" data-en>Photo 16 — Station</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-17.jpg" alt="Фото 17 — Метро"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 17 — Метро</span><span class="photo-caption" data-en>Photo 17 — Metro</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-18.jpg" alt="Фото 18 — Мэрия"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 18 — Мэрия</span><span class="photo-caption" data-en>Photo 18 — City hall</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-19.jpg" alt="Фото 19 — Порт"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 19 — Порт</span><span class="photo-caption" data-en>Photo 19 — Port</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-20.jpg" alt="Фото 20 — Промзона"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 20 — Промзона</span><span class="photo-caption" data-en>Photo 20 — Industrial zone</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-21.jpg" alt="Фото 21 — Рассвет"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 21 — Рассвет</span><span class="photo-caption" data-en>Photo 21 — Sunrise</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-22.jpg" alt="Фото 22 — Закат"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 22 — Закат</span><span class="photo-caption" data-en>Photo 22 — Sunset</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-23.jpg" alt="Фото 23 — Ночная подсветка"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 23 — Ночная подсветка</span><span class="photo-caption" data-en>Photo 23 — Night lights</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-24.jpg" alt="Фото 24 — Площадь зимой"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 24 — Площадь зимой</span><span class="photo-caption" data-en>Photo 24 — Winter square</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-25.jpg" alt="Фото 25 — Весенний парк"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 25 — Весенний парк</span><span class="photo-caption" data-en>Photo 25 — Spring park</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-26.jpg" alt="Фото 26 — Летний фестиваль"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 26 — Летний фестиваль</span><span class="photo-caption" data-en>Photo 26 — Summer festival</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-27.jpg" alt="Фото 27 — Осенние аллеи"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 27 — Осенние аллеи</span><span class="photo-caption" data-en>Photo 27 — Autumn alleys</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-28.jpg" alt="Фото 28 — Ратуша вечером"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 28 — Ратуша вечером</span><span class="photo-caption" data-en>Photo 28 — Town hall in the evening</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-29.jpg" alt="Фото 29 — Высотный район"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 29 — Высотный район</span><span class="photo-caption" data-en>Photo 29 — High-rise district</span></div></div></figure>
+<figure class="photo-card"><div class="photo-slot"><img src="img/gallery/photo-30.jpg" alt="Фото 30 — Вид с воздуха"><div class="photo-overlay"><span class="photo-caption" data-ru>Фото 30 — Вид с воздуха</span><span class="photo-caption" data-en>Photo 30 — Aerial view</span></div></div></figure>
 </div>
 </section>
 </main>
@@ -632,30 +643,6 @@ function initializeMenuFunctions() {
     setGalleryTitle();
     }
 
-    let rafId=null;
-    function updateParallax(){
-    if(!galleryParallax||!galleryParallaxBg||prefersReducedMotion.matches){
-    return;
-    }
-    const rect=galleryParallax.getBoundingClientRect();
-    const viewportHeight=window.innerHeight||document.documentElement.clientHeight;
-    if(rect.bottom<=0||rect.top>=viewportHeight){
-    return;
-    }
-    const progress=((rect.top+rect.height/2)-viewportHeight/2)/viewportHeight;
-    galleryParallaxBg.style.transform=`translate3d(0, ${progress*-42}px, 0)`;
-    }
-
-    function requestParallax(){
-    if(rafId!==null){
-    return;
-    }
-    rafId=requestAnimationFrame(()=>{
-    updateParallax();
-    rafId=null;
-    });
-    }
-
     langBtn.onclick=()=>{
     lang=lang==='ru'?'en':'ru';
     langBtn.animate(
@@ -667,9 +654,6 @@ function initializeMenuFunctions() {
 
     if(!prefersReducedMotion.matches){
     mobileHeroQuery.addEventListener('change',setGalleryTitle);
-    window.addEventListener('scroll',requestParallax,{passive:true});
-    window.addEventListener('resize',requestParallax);
-    requestParallax();
     }
 
     updateLang();
