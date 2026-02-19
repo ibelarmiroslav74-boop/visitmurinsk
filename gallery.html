@@ -264,6 +264,24 @@ border:1px solid var(--glass-pill-border);
 border-radius:22px;
 padding:18px;
 box-shadow:0 12px 30px var(--shadow);
+opacity:0;
+transform:translateY(-90px) rotate(-4deg) scale(.96);
+transform-origin:top center;
+transition:transform .75s cubic-bezier(.18,.89,.32,1.28), opacity .55s ease;
+will-change:transform,opacity;
+transition-delay:calc(var(--fall-delay,0) * 70ms);
+}
+.photo-card.is-visible{
+opacity:1;
+transform:translateY(0) rotate(0) scale(1);
+}
+
+@media (prefers-reduced-motion:reduce){
+.photo-card{
+opacity:1;
+transform:none;
+transition:none;
+}
 }
 .photo-slot{
 width:100%;
@@ -428,6 +446,26 @@ function initializeMenuFunctions() {
     updateLang();
     };
     updateLang();
+
+    const photoCards=document.querySelectorAll('.photo-card');
+    photoCards.forEach((card,index)=>{
+    card.style.setProperty('--fall-delay',index%4);
+    });
+
+    if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    const revealObserver=new IntersectionObserver((entries,observer)=>{
+    entries.forEach(entry=>{
+    if(entry.isIntersecting){
+    entry.target.classList.add('is-visible');
+    observer.unobserve(entry.target);
+    }
+    });
+    },{threshold:.2,rootMargin:'0px 0px -8% 0px'});
+
+    photoCards.forEach(card=>revealObserver.observe(card));
+    }else{
+    photoCards.forEach(card=>card.classList.add('is-visible'));
+    }
 }
 </script>
 
