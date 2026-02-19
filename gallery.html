@@ -252,6 +252,85 @@ max-width:960px;
 margin:80px auto;
 padding:0 20px
 }
+.gallery-parallax-wrap{
+padding:0 20px;
+}
+.gallery-parallax{
+position:relative;
+height:40vh;
+min-height:240px;
+max-height:520px;
+margin:0 auto;
+max-width:1200px;
+border-radius:28px;
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+box-shadow:0 18px 40px var(--shadow);
+}
+.gallery-parallax-bg{
+position:absolute;
+inset:-14% 0;
+background-image:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.45)),url('IMG_3489.png');
+background-size:cover;
+background-position:center;
+will-change:transform;
+transform:translate3d(0,0,0);
+}
+.gallery-parallax-content{
+position:relative;
+z-index:1;
+text-align:center;
+padding:24px;
+color:#fff;
+}
+.gallery-parallax-title{
+font-family:'Unbounded',sans-serif;
+font-size:clamp(1.6rem,5.2vw,3.8rem);
+line-height:1.1;
+text-transform:uppercase;
+text-shadow:0 8px 22px rgba(0,0,0,.55);
+min-height:1.2em;
+}
+
+.hero-title-lines {
+display:inline-flex;
+flex-direction:column;
+align-items:center;
+gap:.12em;
+}
+
+.hero-title-line,
+.hero-title-single {
+display:inline-block;
+white-space:normal;
+opacity:0;
+transform:translateX(-26px);
+clip-path:inset(0 100% 0 0);
+}
+
+.hero-title-line.is-animating,
+.hero-title-single.is-animating {
+animation:heroSlideReveal .85s cubic-bezier(.2,.65,.2,1) forwards;
+}
+
+.hero-title-line.is-animating:nth-child(2) {
+animation-delay:.12s;
+}
+
+@keyframes heroSlideReveal {
+from {
+opacity:0;
+transform:translateX(-26px);
+clip-path:inset(0 100% 0 0);
+}
+to {
+opacity:1;
+transform:translateX(0);
+clip-path:inset(0 0 0 0);
+}
+}
 .gallery-grid{
 display:grid;
 grid-template-columns:1fr;
@@ -281,6 +360,13 @@ transform:translateY(0) rotate(0) scale(1);
 opacity:1;
 transform:none;
 transition:none;
+}
+.hero-title-line,
+.hero-title-single {
+animation:none !important;
+opacity:1;
+transform:none;
+clip-path:none;
 }
 }
 .photo-slot{
@@ -320,6 +406,43 @@ padding:40px;
 font-size:10px;
 color:var(--sub)
 }
+.visually-hidden{
+position:absolute !important;
+width:1px;
+height:1px;
+padding:0;
+margin:-1px;
+overflow:hidden;
+clip:rect(0 0 0 0);
+white-space:nowrap;
+border:0;
+}
+
+@media (max-width:900px){
+.gallery-parallax{
+height:42vh;
+min-height:220px;
+border-radius:22px;
+}
+}
+
+@media (max-width:600px){
+main{padding-top:120px}
+.gallery-parallax-wrap{
+padding:0 14px;
+}
+.gallery-parallax{
+height:38vh;
+min-height:200px;
+border-radius:18px;
+}
+.gallery-parallax-title{
+font-size:clamp(1.3rem,9vw,2rem);
+}
+.hero-title-lines{
+width:100%;
+}
+}
 </style>
 </head>
 
@@ -329,8 +452,18 @@ color:var(--sub)
 <header id="menu-container"></header>
 
 <main>
+<section class="gallery-parallax-wrap" aria-label="Параллакс заголовок галереи">
+<div class="gallery-parallax">
+<div class="gallery-parallax-bg" aria-hidden="true"></div>
+<div class="gallery-parallax-content">
+<h1 class="gallery-parallax-title" data-gallery-title>Снимки города</h1>
+</div>
+</div>
+</section>
+
 <section>
-<h1>Снимки города</h1>
+<h1 class="visually-hidden" data-ru>Снимки города</h1>
+<h1 class="visually-hidden" data-en>City snapshots</h1>
 <p data-ru>Галерея с 30 широкими блоками. В каждый блок можно легко вставить фото: просто замените src у тега img.</p>
 <p data-en>Gallery with 30 wide blocks. You can easily insert photos into each block: just replace the img src.</p>
 
@@ -431,12 +564,98 @@ function initializeMenuFunctions() {
     sessionStorage.setItem('theme',isDark?'dark':'light');
     };
 
+    const galleryParallax=document.querySelector('.gallery-parallax');
+    const galleryParallaxBg=document.querySelector('.gallery-parallax-bg');
+    const galleryTitle=document.querySelector('[data-gallery-title]');
+    const prefersReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mobileHeroQuery=window.matchMedia('(max-width: 640px)');
+    const titleByLang={
+    ru:'Снимки города',
+    en:'City snapshots'
+    };
+
     let lang='ru';
+
+    function animateGalleryTitle(){
+    if(!galleryTitle){
+    return;
+    }
+    const text=galleryTitle.textContent.trim();
+    if(!text){
+    return;
+    }
+    galleryTitle.innerHTML='';
+
+    if(mobileHeroQuery.matches){
+    const singleLine=document.createElement('span');
+    singleLine.className='hero-title-single';
+    singleLine.textContent=text;
+    galleryTitle.appendChild(singleLine);
+    requestAnimationFrame(()=>singleLine.classList.add('is-animating'));
+    return;
+    }
+
+    const words=text.split(/\s+/);
+    const midpoint=Math.ceil(words.length/2);
+    const lines=[words.slice(0,midpoint).join(' '),words.slice(midpoint).join(' ')].filter(Boolean);
+    const linesWrapper=document.createElement('span');
+    linesWrapper.className='hero-title-lines';
+
+    lines.forEach(line=>{
+    const lineSpan=document.createElement('span');
+    lineSpan.className='hero-title-line';
+    lineSpan.textContent=line;
+    linesWrapper.appendChild(lineSpan);
+    });
+
+    galleryTitle.appendChild(linesWrapper);
+    requestAnimationFrame(()=>{
+    linesWrapper.querySelectorAll('.hero-title-line').forEach(line=>line.classList.add('is-animating'));
+    });
+    }
+
+    function setGalleryTitle(){
+    if(!galleryTitle){
+    return;
+    }
+    galleryTitle.textContent=titleByLang[lang]||titleByLang.ru;
+    if(prefersReducedMotion.matches){
+    return;
+    }
+    animateGalleryTitle();
+    }
+
     function updateLang(){
     langBtn.textContent=lang.toUpperCase();
     document.querySelectorAll('[data-ru]').forEach(e=>e.style.display=lang==='ru'?'block':'none');
     document.querySelectorAll('[data-en]').forEach(e=>e.style.display=lang==='en'?'block':'none');
+    setGalleryTitle();
     }
+
+    let rafId=null;
+    function updateParallax(){
+    if(!galleryParallax||!galleryParallaxBg||prefersReducedMotion.matches){
+    return;
+    }
+    const rect=galleryParallax.getBoundingClientRect();
+    const viewportHeight=window.innerHeight||document.documentElement.clientHeight;
+    if(rect.bottom<=0||rect.top>=viewportHeight){
+    return;
+    }
+    const progress=((rect.top+rect.height/2)-viewportHeight/2)/viewportHeight;
+    galleryParallaxBg.style.transform=`translate3d(0, ${progress*-42}px, 0)`;
+    }
+
+    function requestParallax(){
+    if(rafId!==null){
+    return;
+    }
+    rafId=requestAnimationFrame(()=>{
+    updateParallax();
+    rafId=null;
+    });
+    }
+
     langBtn.onclick=()=>{
     lang=lang==='ru'?'en':'ru';
     langBtn.animate(
@@ -445,6 +664,14 @@ function initializeMenuFunctions() {
     );
     updateLang();
     };
+
+    if(!prefersReducedMotion.matches){
+    mobileHeroQuery.addEventListener('change',setGalleryTitle);
+    window.addEventListener('scroll',requestParallax,{passive:true});
+    window.addEventListener('resize',requestParallax);
+    requestParallax();
+    }
+
     updateLang();
 
     const photoCards=document.querySelectorAll('.photo-card');
