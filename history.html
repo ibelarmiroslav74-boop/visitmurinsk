@@ -110,34 +110,26 @@ pointer-events:auto
 .controls{display:flex;gap:10px}
 
 button{
-border:1px solid var(--control-border);
-background:linear-gradient(145deg,color-mix(in srgb,var(--control-bg) 88%,white 12%),color-mix(in srgb,var(--control-bg) 94%,transparent));
+border:1px solid color-mix(in srgb,var(--control-border) 70%,transparent);
+background:color-mix(in srgb,var(--control-bg) 82%,transparent);
 color:var(--text);
 cursor:pointer;
-box-shadow:0 10px 24px var(--shadow), inset 0 1px 0 var(--control-highlight);
-backdrop-filter:blur(16px) saturate(150%);
--webkit-backdrop-filter:blur(16px) saturate(150%);
+box-shadow:0 10px 24px var(--shadow);
+backdrop-filter:blur(14px) saturate(135%);
+-webkit-backdrop-filter:blur(14px) saturate(135%);
 display:flex;
 align-items:center;
 justify-content:center;
 position:relative;
 overflow:hidden;
-transition:transform .22s ease, box-shadow .25s ease, background .25s ease;
-}
-
-button::before{
-content:"";
-position:absolute;
-inset:0;
-background:linear-gradient(125deg,transparent 20%,color-mix(in srgb,var(--control-highlight) 82%,transparent) 50%,transparent 80%);
-opacity:.48;
-pointer-events:none;
-mix-blend-mode:screen;
+transition:transform .22s ease, box-shadow .25s ease, background-color .25s ease, border-color .25s ease;
 }
 
 button:hover{
 transform:translateY(-1px);
-box-shadow:0 12px 28px var(--shadow), inset 0 1px 0 var(--control-highlight);
+background:color-mix(in srgb,var(--control-bg) 92%,transparent);
+border-color:color-mix(in srgb,var(--control-border) 88%,transparent);
+box-shadow:0 12px 28px var(--shadow);
 }
 
 button:active{
