@@ -246,16 +246,107 @@ nav.show a:nth-child(2){transition-delay:.1s}
 nav.show a:nth-child(3){transition-delay:.15s}
 nav.show a:nth-child(4){transition-delay:.2s}
 
-main{padding-top:140px}
+main{padding-top:0}
 section{
 max-width:960px;
 margin:80px auto;
 padding:0 20px
 }
-h1{
+.page-parallax-wrap{
+overflow:hidden;
+margin:0;
+padding:0;
+max-width:none;
+}
+.page-parallax{
+position:relative;
+height:58vh;
+min-height:340px;
+max-height:680px;
+width:100vw;
+margin-left:calc(50% - 50vw);
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+}
+.page-parallax-bg{
+position:absolute;
+inset:-10% 0;
+background-image:linear-gradient(180deg,rgba(0,0,0,.15),rgba(0,0,0,.45)),url('IMG_3489.png');
+background-size:cover;
+background-position:center;
+will-change:transform;
+transform:translate3d(0,0,0);
+}
+.page-parallax-content{
+position:relative;
+z-index:1;
+text-align:center;
+padding:24px;
+color:#fff;
+}
+.page-parallax-title{
+font-family:'Unbounded',sans-serif;
+font-size:clamp(1.6rem,5.2vw,3.6rem);
+line-height:1.1;
+text-transform:uppercase;
+text-shadow:0 8px 22px rgba(0,0,0,.55);
+min-height:1.2em;
+}
+
+.hero-title-lines {
+display:inline-flex;
+flex-direction:column;
+align-items:center;
+gap:.12em;
+}
+
+.hero-title-line,
+.hero-title-single {
+display:inline-block;
+white-space:normal;
+opacity:0;
+transform:translateX(-26px);
+clip-path:inset(0 100% 0 0);
+}
+
+.hero-title-line.is-animating,
+.hero-title-single.is-animating {
+animation:heroSlideReveal .85s cubic-bezier(.2,.65,.2,1) forwards;
+}
+
+.hero-title-line.is-animating:nth-child(2) {
+animation-delay:.12s;
+}
+
+@keyframes heroSlideReveal {
+from {
+opacity:0;
+transform:translateX(-26px);
+clip-path:inset(0 100% 0 0);
+}
+to {
+opacity:1;
+transform:translateX(0);
+clip-path:inset(0 0 0 0);
+}
+}
+
+@media (prefers-reduced-motion:reduce){
+.hero-title-line,
+.hero-title-single {
+animation:none !important;
+opacity:1;
+transform:none;
+clip-path:none;
+}
+}
+
+.page-content h2{
 font-family:'Unbounded',sans-serif;
 font-size:22px;
-margin-bottom:28px
+margin-bottom:28px;
 }
 p{
 font-size:10px;
@@ -278,8 +369,17 @@ color:var(--sub)
 <header id="menu-container"></header>
 
 <main>
-<section>
-<h1>История города Муринска</h1>
+<section class="page-parallax-wrap" aria-label="Параллакс заголовок страницы История">
+<div class="page-parallax">
+<div class="page-parallax-bg" aria-hidden="true"></div>
+<div class="page-parallax-content">
+<h1 class="page-parallax-title" data-page-title>История Муринска</h1>
+</div>
+</div>
+</section>
+
+<section class="page-content">
+<h2>История города Муринска</h2>
 <p data-ru>Murinsk — это город в Minecraft.</p>
 <p data-en>Murinsk is a city in Minecraft.</p>
 </section>
@@ -347,11 +447,77 @@ function initializeMenuFunctions() {
     sessionStorage.setItem('theme',isDark?'dark':'light');
     };
 
+    const pageParallax=document.querySelector('.page-parallax');
+    const pageParallaxBg=document.querySelector('.page-parallax-bg');
+    const pageParallaxSpeed=0.22;
+    const pageParallaxSmoothness=0.085;
+    let pageParallaxCurrent=0;
+    let pageParallaxTarget=0;
+    let pageParallaxAnimating=false;
+    const pageTitle=document.querySelector('[data-page-title]');
+    const prefersReducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mobileHeroQuery=window.matchMedia('(max-width: 640px)');
+    const titleByLang={
+    ru:'История Муринска',
+    en:'Murinsk history'
+    };
+
     let lang='ru';
+
+    function animatePageTitle(){
+    if(!pageTitle){
+    return;
+    }
+    const text=pageTitle.textContent.trim();
+    if(!text){
+    return;
+    }
+    pageTitle.innerHTML='';
+
+    if(mobileHeroQuery.matches){
+    const singleLine=document.createElement('span');
+    singleLine.className='hero-title-single';
+    singleLine.textContent=text;
+    pageTitle.appendChild(singleLine);
+    requestAnimationFrame(()=>singleLine.classList.add('is-animating'));
+    return;
+    }
+
+    const words=text.split(/\s+/);
+    const midpoint=Math.ceil(words.length/2);
+    const lines=[words.slice(0,midpoint).join(' '),words.slice(midpoint).join(' ')].filter(Boolean);
+    const linesWrapper=document.createElement('span');
+    linesWrapper.className='hero-title-lines';
+
+    lines.forEach(line=>{
+    const lineSpan=document.createElement('span');
+    lineSpan.className='hero-title-line';
+    lineSpan.textContent=line;
+    linesWrapper.appendChild(lineSpan);
+    });
+
+    pageTitle.appendChild(linesWrapper);
+    requestAnimationFrame(()=>{
+    linesWrapper.querySelectorAll('.hero-title-line').forEach(line=>line.classList.add('is-animating'));
+    });
+    }
+
+    function setPageTitle(){
+    if(!pageTitle){
+    return;
+    }
+    pageTitle.textContent=titleByLang[lang]||titleByLang.ru;
+    if(prefersReducedMotion.matches){
+    return;
+    }
+    animatePageTitle();
+    }
+
     function updateLang(){
     langBtn.textContent=lang.toUpperCase();
     document.querySelectorAll('[data-ru]').forEach(e=>e.style.display=lang==='ru'?'block':'none');
     document.querySelectorAll('[data-en]').forEach(e=>e.style.display=lang==='en'?'block':'none');
+    setPageTitle();
     }
     langBtn.onclick=()=>{
     lang=lang==='ru'?'en':'ru';
@@ -361,7 +527,59 @@ function initializeMenuFunctions() {
     );
     updateLang();
     };
+
+    if(!prefersReducedMotion.matches){
+    mobileHeroQuery.addEventListener('change',setPageTitle);
+    }
+
     updateLang();
+
+    function updateParallax(){
+    if(!pageParallax||!pageParallaxBg){
+    return;
+    }
+    if(prefersReducedMotion.matches){
+    pageParallaxBg.style.transform='translate3d(0,0,0)';
+    return;
+    }
+
+    const diff=pageParallaxTarget-pageParallaxCurrent;
+    pageParallaxCurrent+=diff*pageParallaxSmoothness;
+    pageParallaxBg.style.transform=`translate3d(0, ${pageParallaxCurrent.toFixed(2)}px, 0)`;
+
+    if(Math.abs(diff)>0.1){
+    requestAnimationFrame(updateParallax);
+    }else{
+    pageParallaxAnimating=false;
+    }
+    }
+
+    function requestParallaxUpdate(){
+    if(!pageParallax||!pageParallaxBg){
+    return;
+    }
+    if(prefersReducedMotion.matches){
+    pageParallaxBg.style.transform='translate3d(0,0,0)';
+    pageParallaxCurrent=0;
+    pageParallaxTarget=0;
+    pageParallaxAnimating=false;
+    return;
+    }
+    const rect=pageParallax.getBoundingClientRect();
+    pageParallaxTarget=rect.top*pageParallaxSpeed;
+
+    if(!pageParallaxAnimating){
+    pageParallaxAnimating=true;
+    requestAnimationFrame(updateParallax);
+    }
+    }
+
+    window.addEventListener('scroll',requestParallaxUpdate,{passive:true});
+    window.addEventListener('resize',requestParallaxUpdate);
+    if(typeof prefersReducedMotion.addEventListener==='function'){
+    prefersReducedMotion.addEventListener('change',requestParallaxUpdate);
+    }
+    requestParallaxUpdate();
 }
 </script>
 
