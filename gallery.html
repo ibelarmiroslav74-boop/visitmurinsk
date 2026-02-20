@@ -246,7 +246,7 @@ nav.show a:nth-child(2){transition-delay:.1s}
 nav.show a:nth-child(3){transition-delay:.15s}
 nav.show a:nth-child(4){transition-delay:.2s}
 
-main{padding-top:140px}
+main{padding-top:0}
 section{
 max-width:960px;
 margin:80px auto;
@@ -254,6 +254,9 @@ padding:0 20px
 }
 .gallery-parallax-wrap{
 overflow:hidden;
+margin:0;
+padding:0;
+max-width:none;
 }
 .gallery-parallax{
 position:relative;
@@ -496,21 +499,15 @@ border:0;
 
 @media (max-width:900px){
 .gallery-parallax{
-height:42vh;
-min-height:220px;
-border-radius:22px;
+height:60vh;
+min-height:360px;
 }
 }
 
 @media (max-width:600px){
-main{padding-top:120px}
-.gallery-parallax-wrap{
-padding:0 14px;
-}
 .gallery-parallax{
-height:38vh;
-min-height:200px;
-border-radius:18px;
+height:60vh;
+min-height:320px;
 }
 .gallery-parallax-title{
 font-size:clamp(1.3rem,9vw,2rem);
@@ -518,6 +515,10 @@ font-size:clamp(1.3rem,9vw,2rem);
 .hero-title-lines{
 width:100%;
 }
+}
+
+.gallery-content-section{
+margin-top:36px;
 }
 </style>
 </head>
@@ -537,7 +538,7 @@ width:100%;
 </div>
 </section>
 
-<section>
+<section class="gallery-content-section">
 <h1 class="visually-hidden" data-ru>Снимки города</h1>
 <h1 class="visually-hidden" data-en>City snapshots</h1>
 <p data-ru>Галерея из 30 широких фотографий. Нажмите на кадр, чтобы открыть его крупнее.</p>
