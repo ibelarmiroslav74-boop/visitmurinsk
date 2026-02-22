@@ -724,6 +724,10 @@ function initializeMenuFunctions() {
     ru:'Оставить отзыв',
     en:'Leave a review'
     };
+    const browserTitleByLang={
+    ru:'Муринск - Оставить отзыв',
+    en:'Murinsk - Leave a review'
+    };
 
     let lang=localStorage.getItem('lang')||sessionStorage.getItem('lang');
     if(lang!=='ru'&&lang!=='en'){
@@ -812,6 +816,7 @@ function initializeMenuFunctions() {
     langBtn.textContent=lang.toUpperCase();
     document.querySelectorAll('[data-ru]').forEach(e=>e.style.display=lang==='ru'?'block':'none');
     document.querySelectorAll('[data-en]').forEach(e=>e.style.display=lang==='en'?'block':'none');
+    document.title=browserTitleByLang[lang]||browserTitleByLang.ru;
     setPageTitle();
     }
     langBtn.onclick=()=>{
