@@ -355,13 +355,6 @@ padding:40px;
 font-size:10px;
 color:var(--sub)
 }
-  <div id="cookie-notice" class="cookie-banner">
-    <p>Мы используем файлы cookie для улучшения работы сайта. <a href="/privacy">Подробнее</a></p>
-    <button id="accept-cookies">Принять</button>
-</div>
-
-
-
 /* Top loading progress */
 #site-loader-progress{
 position:fixed;
@@ -387,6 +380,10 @@ width:100%;
 
 <body>
 <div id="site-loader-progress" aria-hidden="true"></div>
+<div id="cookie-notice" class="cookie-banner">
+    <p>Мы используем файлы cookie для улучшения работы сайта. <a href="/privacy">Подробнее</a></p>
+    <button id="accept-cookies">Принять</button>
+</div>
 
 
 <header>
@@ -869,6 +866,119 @@ width:100%;
             font-size: clamp(34px, 18vw, 86px);
             right: auto;
             left: 0;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .logo {
+            font-size: 16px;
+        }
+
+        .controls {
+            gap: 8px;
+        }
+
+        #langBtn,
+        #themeBtn,
+        #menuBtn {
+            width: 34px;
+            height: 34px;
+        }
+
+        #langBtn {
+            font-size: 11px;
+        }
+
+        nav {
+            left: auto;
+            right: 0;
+            transform: translateY(-10px) scale(.96);
+            min-width: min(300px, calc(100vw - 28px));
+            padding: 22px;
+            border-radius: 24px;
+            gap: 16px;
+        }
+
+        nav.show {
+            transform: translateY(10px) scale(1);
+        }
+
+        .parallax-section {
+            min-height: 92vh;
+        }
+
+        .hero-statement {
+            min-height: auto;
+            padding: 72px 20px 48px;
+        }
+
+        .facts-grid,
+        .social-wrap,
+        .photo-wrap,
+        .external-wrap {
+            width: calc(100% - 28px);
+        }
+    }
+
+    @media (max-width: 560px) {
+        .header-inner {
+            padding: 12px 14px;
+            margin: 10px;
+            border-radius: 20px;
+        }
+
+        .logo {
+            font-size: 14px;
+        }
+
+        #langBtn,
+        #themeBtn,
+        #menuBtn {
+            width: 32px;
+            height: 32px;
+        }
+
+        nav a {
+            font-size: 10px;
+        }
+
+        .content-point p,
+        .content-point li,
+        .content-point a,
+        .fact-card p,
+        .social-card p,
+        .external-links a,
+        .quick-links a {
+            font-size: 10px;
+        }
+
+        .facts-grid,
+        .social-grid,
+        .gallery-grid,
+        .photo-grid,
+        .quick-links {
+            grid-template-columns: 1fr;
+        }
+
+        .fact-card,
+        .social-card {
+            min-height: auto;
+        }
+
+        footer {
+            padding: 24px 14px 34px;
+            line-height: 1.8;
+        }
+
+        .cookie-banner {
+            padding: 12px;
+            font-size: 12px;
+            line-height: 1.6;
+        }
+
+        .cookie-banner button {
+            margin-left: 0;
+            margin-top: 10px;
         }
     }
 
