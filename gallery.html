@@ -696,7 +696,7 @@ function initializeMenuFunctions() {
     en:'City snapshots'
     };
 
-    let lang=sessionStorage.getItem('lang');
+    let lang=localStorage.getItem('lang')||sessionStorage.getItem('lang');
     if(lang!=='ru'&&lang!=='en'){
     lang='ru';
     }
@@ -759,6 +759,7 @@ function initializeMenuFunctions() {
 
     langBtn.onclick=()=>{
     lang=lang==='ru'?'en':'ru';
+    localStorage.setItem('lang',lang);
     sessionStorage.setItem('lang',lang);
     langBtn.animate(
     [{transform:'scale(1)'},{transform:'scale(1.15)'},{transform:'scale(1)'}],
