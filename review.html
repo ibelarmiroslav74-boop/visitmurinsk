@@ -679,7 +679,10 @@ function initializeMenuFunctions() {
     en:'Leave a review'
     };
 
-    let lang='ru';
+    let lang=sessionStorage.getItem('lang');
+    if(lang!=='ru'&&lang!=='en'){
+    lang='ru';
+    }
 
     function animatePageTitle(){
     if(!pageTitle){
@@ -767,6 +770,7 @@ function initializeMenuFunctions() {
     }
     langBtn.onclick=()=>{
     lang=lang==='ru'?'en':'ru';
+    sessionStorage.setItem('lang',lang);
     langBtn.animate(
     [{transform:'scale(1)'},{transform:'scale(1.15)'},{transform:'scale(1)'}],
     {duration:200}
