@@ -464,6 +464,25 @@ margin-bottom:12px;
 .timeline-item{padding:18px}
 .timeline-item::before{left:-21px;top:24px}
 }
+
+.reveal-on-scroll{
+opacity:0;
+transform:translate3d(0,22px,0);
+transition:opacity .55s ease,transform .55s ease;
+}
+.reveal-on-scroll.is-visible{
+opacity:1;
+transform:translate3d(0,0,0);
+}
+@media (prefers-reduced-motion: reduce){
+.reveal-on-scroll,
+.reveal-on-scroll.is-visible{
+opacity:1;
+transform:none;
+transition:none;
+}
+}
+
 footer{
 text-align:center;
 padding:40px;
@@ -488,14 +507,14 @@ color:var(--sub)
 </div>
 </section>
 
-<section class="page-content">
+<section class="page-content" data-reveal>
 <h2 data-ru>История города Муринска</h2>
 <h2 data-en>History of Murinsk</h2>
 <p class="page-lead" data-ru>Ниже — расширенный шаблон исторической страницы: каждый блок уже имеет год, фотографию и несколько абзацев. Сюжет можно развивать дальше, добавляя новые этапы без изменения структуры.</p>
 <p class="page-lead" data-en>Below is an extended history-page template: each block already includes a year, a photo, and multiple text paragraphs. You can continue the story by adding new milestones without changing the structure.</p>
 
-<div class="timeline">
-  <article class="timeline-item">
+<div class="timeline" data-reveal>
+  <article class="timeline-item" data-reveal>
     <h3 class="timeline-year">2019 — Основание</h3>
     <figure class="timeline-photo">
       <img src="IMG_3823.png" alt="Первый квартал Муринска">
@@ -510,7 +529,7 @@ color:var(--sub)
     </div>
   </article>
 
-  <article class="timeline-item">
+  <article class="timeline-item" data-reveal>
     <h3 class="timeline-year">2020 — Дороги и районы</h3>
     <figure class="timeline-photo">
       <img src="IMG_3824.png" alt="Формирование дорожной сети">
@@ -525,7 +544,7 @@ color:var(--sub)
     </div>
   </article>
 
-  <article class="timeline-item">
+  <article class="timeline-item" data-reveal>
     <h3 class="timeline-year">2021 — Общественные места</h3>
     <figure class="timeline-photo">
       <img src="IMG_3825.png" alt="Центральный парк и набережная">
@@ -540,7 +559,7 @@ color:var(--sub)
     </div>
   </article>
 
-  <article class="timeline-item">
+  <article class="timeline-item" data-reveal>
     <h3 class="timeline-year">2022 — Расширение и стиль</h3>
     <figure class="timeline-photo">
       <img src="IMG_3489.png" alt="Новые кварталы Муринска">
@@ -555,7 +574,7 @@ color:var(--sub)
     </div>
   </article>
 
-  <article class="timeline-item">
+  <article class="timeline-item" data-reveal>
     <h3 class="timeline-year">2023 — Городские легенды</h3>
     <figure class="timeline-photo">
       <img src="IMG_0377.jpeg" alt="Ночной Муринск">
@@ -570,7 +589,7 @@ color:var(--sub)
     </div>
   </article>
 
-  <article class="timeline-item">
+  <article class="timeline-item" data-reveal>
     <h3 class="timeline-year">2024–2026 — Настоящее и будущее</h3>
     <figure class="timeline-photo">
       <img src="IMG_3824.png" alt="Современный этап развития">
@@ -716,6 +735,35 @@ function initializeMenuFunctions() {
     animatePageTitle();
     }
 
+
+
+    function initContentRevealAnimation(){
+    const revealNodes=document.querySelectorAll('[data-reveal]');
+    if(!revealNodes.length){
+    return;
+    }
+    revealNodes.forEach((node,index)=>{
+    node.classList.add('reveal-on-scroll');
+    node.style.transitionDelay=`${Math.min(index*70,320)}ms`;
+    });
+
+    if(prefersReducedMotion.matches||typeof IntersectionObserver!=='function'){
+    revealNodes.forEach(node=>node.classList.add('is-visible'));
+    return;
+    }
+
+    const revealObserver=new IntersectionObserver(entries=>{
+    entries.forEach(entry=>{
+    if(entry.isIntersecting){
+    entry.target.classList.add('is-visible');
+    revealObserver.unobserve(entry.target);
+    }
+    });
+    },{threshold:.15,rootMargin:'0px 0px -10% 0px'});
+
+    revealNodes.forEach(node=>revealObserver.observe(node));
+    }
+
     function updateLang(){
     langBtn.textContent=lang.toUpperCase();
     document.querySelectorAll('[data-ru]').forEach(e=>e.style.display=lang==='ru'?'block':'none');
@@ -736,6 +784,7 @@ function initializeMenuFunctions() {
     }
 
     updateLang();
+    initContentRevealAnimation();
 
     function updateParallax(){
     if(!pageParallax||!pageParallaxBg){
