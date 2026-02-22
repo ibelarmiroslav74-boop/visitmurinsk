@@ -494,35 +494,96 @@ color:var(--sub)
         background: var(--bg);
         position: relative;
         z-index: 10;
-        padding: 56px 20px;
+        padding: 56px 20px 90px;
+    }
+
+    .city-presentation {
+        max-width: 1100px;
+        margin: 0 auto;
+        display: grid;
+        gap: 24px;
     }
 
     .content-point {
-        max-width: 720px;
-        margin: 0 auto;
-        padding: clamp(20px, 3vw, 30px);
-        border-radius: 20px;
+        padding: clamp(20px, 3vw, 32px);
+        border-radius: 22px;
         border: 1px solid color-mix(in srgb, var(--text) 30%, transparent);
         background: color-mix(in srgb, var(--menu) 78%, transparent);
         box-shadow: 0 10px 28px var(--shadow);
     }
 
-    .content-point ul {
+    .content-point h2,
+    .content-point h3 {
+        font-family: 'Unbounded', sans-serif;
+        margin-bottom: 16px;
+        line-height: 1.35;
+    }
+
+    .content-point h2 { font-size: clamp(18px, 3.4vw, 28px); }
+    .content-point h3 { font-size: clamp(14px, 2.5vw, 20px); }
+
+    .content-point p,
+    .content-point li,
+    .content-point a {
+        font-size: clamp(10px, 1.35vw, 12px);
+        line-height: 1.9;
+    }
+
+    .content-point ul,
+    .content-point ol {
         margin: 0;
         padding-left: 24px;
     }
 
-    .content-point li {
-        line-height: 1.6;
+    .content-point li + li { margin-top: 10px; }
+
+    .content-point a {
+        color: var(--text);
+        text-decoration-thickness: 2px;
+        text-underline-offset: 4px;
     }
 
-    .content-point li + li {
-        margin-top: 10px;
+    .quick-links {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
     }
 
-    .content-point ul ul {
-        margin-top: 10px;
-        padding-left: 22px;
+    .quick-links a {
+        display: block;
+        border-radius: 14px;
+        border: 1px solid color-mix(in srgb, var(--text) 25%, transparent);
+        padding: 14px;
+        text-decoration: none;
+        background: color-mix(in srgb, var(--glass) 75%, transparent);
+    }
+
+    .gallery-grid {
+        margin-top: 18px;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 14px;
+    }
+
+    .gallery-grid figure {
+        border-radius: 14px;
+        overflow: hidden;
+        border: 1px solid color-mix(in srgb, var(--text) 22%, transparent);
+        background: color-mix(in srgb, var(--glass) 75%, transparent);
+    }
+
+    .gallery-grid img {
+        width: 100%;
+        aspect-ratio: 16/10;
+        object-fit: cover;
+        display: block;
+    }
+
+    .gallery-grid figcaption {
+        padding: 10px 12px 12px;
+        font-size: 9px;
+        color: var(--sub);
+        line-height: 1.7;
     }
 </style>
 
@@ -535,15 +596,114 @@ color:var(--sub)
     </div>
     
     <div class="content-after">
-        <div class="content-point">
-            <ul>
-                <li>
-                    <span data-i18n="content.item">Муринск развивается как живой город внутри Minecraft.</span>
-                    <ul>
-                        <li data-i18n="content.subitem">Регулярно добавляются новые районы, маршруты и общественные пространства.</li>
-                    </ul>
-                </li>
-            </ul>
+        <div class="city-presentation">
+            <section class="content-point" id="city-intro">
+                <h2>Муринск: цифровой город, в который хочется возвращаться</h2>
+                <p>
+                    Под параллаксом начинается большая презентация Муринска: здесь собраны районы, маршруты, идеи развития,
+                    фотозарисовки и полезные ссылки. Этот раздел сделан как длинное путешествие — можно читать последовательно,
+                    а можно прыгать по внутренним якорям как по станции метро.
+                </p>
+                <div class="quick-links">
+                    <a href="#districts">Районы и их характер</a>
+                    <a href="#infrastructure">Инфраструктура и транспорт</a>
+                    <a href="#culture">Культура и жизнь города</a>
+                    <a href="#tourist-routes">Маршруты для гостей</a>
+                    <a href="#gallery-showcase">Фотографии и атмосфера</a>
+                    <a href="#links">Полезные внутренние и внешние ссылки</a>
+                </div>
+            </section>
+
+            <section class="content-point" id="districts">
+                <h3>Районы Муринска</h3>
+                <p>Город развивается кварталами, каждый район имеет собственную архитектуру, логику улиц и общественные пространства.</p>
+                <ol>
+                    <li><strong>Исторический центр:</strong> широкие проспекты, музейная площадь, мемориальные здания и пешеходные бульвары.</li>
+                    <li><strong>Северный жилой кластер:</strong> кварталы с дворами, школами, спортивными полями и небольшими скверами.</li>
+                    <li><strong>Промышленный пояс:</strong> депо, логистические терминалы, фабрики и грузовые ветки железной дороги.</li>
+                    <li><strong>Набережная:</strong> прогулочный маршрут с обзорными точками, пирсами и зонами вечерней подсветки.</li>
+                    <li><strong>Новый технопарк:</strong> экспериментальные здания, кампус, мастерские и креативные площадки.</li>
+                </ol>
+            </section>
+
+            <section class="content-point" id="infrastructure">
+                <h3>Инфраструктура и транспорт</h3>
+                <p>В Муринске активно прорабатывается связность: между ключевыми районами есть магистрали, тоннели, мосты и остановочные узлы.</p>
+                <ul>
+                    <li>Планируется интеграция автобусных маршрутов с пешеходными кольцами и внутренними велотропами.</li>
+                    <li>Создаются ориентиры и указатели, чтобы город был понятен новичкам с первого визита.</li>
+                    <li>Ночные маршруты продуманы для безопасного перемещения между центром и удалёнными кварталами.</li>
+                    <li>Для гостей открыт отдельный маршрут «Первый день в Муринске» с обязательными точками обзора.</li>
+                </ul>
+                <p>
+                    Подробнее о визуальной части — в
+                    <a href="/gallery.html">галерее проекта</a>, а исторические этапы развития собраны на странице
+                    <a href="/history.html">истории города</a>.
+                </p>
+            </section>
+
+            <section class="content-point" id="culture">
+                <h3>Культура и городская жизнь</h3>
+                <p>Муринск задуман не как декорация, а как «живой макет» с событиями, общественными сценариями и городской драматургией.</p>
+                <ul>
+                    <li>Праздничные площади для сезонных ивентов, ярмарок и тематических выставок.</li>
+                    <li>Городские квесты с чекпоинтами, историями зданий и достижениями для исследователей.</li>
+                    <li>Районные инициативы: благоустройство парков, обновление фасадов, создание новых скверов.</li>
+                    <li>Площадки для отзывов и предложений через форму на странице <a href="/review.html">«Оставить отзыв»</a>.</li>
+                </ul>
+            </section>
+
+            <section class="content-point" id="tourist-routes">
+                <h3>Маршруты для гостей</h3>
+                <p>Чтобы изучить город постепенно, предлагаем три формата прогулок:</p>
+                <ol>
+                    <li><strong>Экспресс-маршрут (20 минут):</strong> панорама центра, главная площадь, набережная, смотровая.</li>
+                    <li><strong>Классический маршрут (45 минут):</strong> центр + жилые кварталы + культурный кластер + технопарк.</li>
+                    <li><strong>Глубокая экспедиция (90+ минут):</strong> все магистрали, промзона, логистический узел, ночная подсветка.</li>
+                </ol>
+                <p>Для удобства используйте меню в шапке, а также быстрые ссылки внутри этой страницы.</p>
+            </section>
+
+            <section class="content-point" id="gallery-showcase">
+                <h3>Фотографии Муринска</h3>
+                <p>Ниже — визуальный блок с несколькими кадрами города: дневные виды, панорамы и архитектурные акценты.</p>
+                <div class="gallery-grid">
+                    <figure>
+                        <img src="IMG_3489.png" alt="Панорама Муринска на закате">
+                        <figcaption>Панорамный кадр центра Муринска с контрастом высотной и общественной застройки.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="IMG_3823.png" alt="Городская улица Муринска">
+                        <figcaption>Один из жилых проспектов: освещение, благоустройство и ритм фасадов.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="IMG_3824.png" alt="Общественное пространство Муринска">
+                        <figcaption>Общественное пространство, где пересекаются туристические и повседневные маршруты.</figcaption>
+                    </figure>
+                    <figure>
+                        <img src="IMG_3825.png" alt="Ночная подсветка кварталов Муринска">
+                        <figcaption>Ночная сцена города с акцентом на световой дизайн и атмосферу вечерней прогулки.</figcaption>
+                    </figure>
+                </div>
+            </section>
+
+            <section class="content-point" id="links">
+                <h3>Полезные ссылки</h3>
+                <p>Внутренние ссылки проекта:</p>
+                <ul>
+                    <li><a href="/">Главная страница Муринска</a></li>
+                    <li><a href="/gallery.html">Галерея</a></li>
+                    <li><a href="/history.html">История развития</a></li>
+                    <li><a href="/review.html">Форма отзывов</a></li>
+                </ul>
+                <p>Внешние ссылки для вдохновения и справки:</p>
+                <ul>
+                    <li><a href="https://www.minecraft.net" target="_blank" rel="noopener noreferrer">Официальный сайт Minecraft</a></li>
+                    <li><a href="https://www.planetminecraft.com" target="_blank" rel="noopener noreferrer">Planet Minecraft (проекты и карты)</a></li>
+                    <li><a href="https://minecraft.wiki" target="_blank" rel="noopener noreferrer">Minecraft Wiki</a></li>
+                    <li><a href="https://ru.wikipedia.org/wiki/Градостроительство" target="_blank" rel="noopener noreferrer">Материалы по градостроительству</a></li>
+                </ul>
+            </section>
         </div>
     </div>
 </div>
