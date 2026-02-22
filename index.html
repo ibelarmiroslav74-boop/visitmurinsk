@@ -387,37 +387,7 @@ width:100%;
 </div>
 
 
-<header>
-<div class="header-inner">
-<a class="logo" href="/index.html" style="text-decoration:none;color:inherit;">Murinsk</a>
-
-<div class="controls">
-<button id="langBtn">RU</button>
-
-
-<button id="themeBtn">
-<svg id="sun" viewBox="0 0 24 24">
-<circle cx="12" cy="12" r="5"/>
-<!-- Добавлены параметры stroke для отображения лучей -->
-<path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-</svg>
-<svg id="moon" viewBox="0 0 24 24">
-<path d="M21 12.79A9 9 0 1 1 11.21 3a7 7 0 0 0 9.79 9.79z"/>
-</svg>
-</button>
-
-
-<button id="menuBtn"><span></span><span></span></button>
-</div>
-
-<nav id="menu">
-<a href="/" data-i18n="nav.home">Главная</a>
-<a href="/gallery.html" data-i18n="nav.gallery">Галерея</a>
-<a href="/history.html" data-i18n="nav.history">История</a>
-<a href="/review.html" data-i18n="nav.review">Оставить отзыв</a>
-</nav>
-</div>
-</header>
+<header id="menu-container"></header>
 
 <main>
     <style>
@@ -1049,6 +1019,14 @@ width:100%;
 <footer data-i18n="footer">© Murinsk 2026 · All rights reserved</footer>
 
 <script>
+fetch('menu.html')
+    .then(response => response.text())
+    .then(html => {
+        document.getElementById('menu-container').innerHTML = html;
+        initializeMenuFunctions();
+    });
+
+function initializeMenuFunctions(){
 const menuBtn=document.getElementById('menuBtn');
 const menu=document.getElementById('menu');
 const themeBtn=document.getElementById('themeBtn');
@@ -1222,6 +1200,12 @@ return path.split('.').reduce((acc,key)=>acc&&acc[key],translations[lang]);
 
 function updateLang(){
 langBtn.textContent=lang.toUpperCase();
+document.querySelectorAll('[data-ru]').forEach(el=>{
+el.style.display=lang==='ru'?'':'none';
+});
+document.querySelectorAll('[data-en]').forEach(el=>{
+el.style.display=lang==='en'?'':'none';
+});
 document.querySelectorAll('[data-i18n]').forEach(el=>{
 const key=el.dataset.i18n;
 const value=getTranslation(key);
@@ -1311,6 +1295,8 @@ if(typeof prefersReducedMotion.addEventListener==='function'){
 prefersReducedMotion.addEventListener('change',requestParallaxUpdate);
 }
 requestParallaxUpdate();
+
+}
 
 </script>
 
