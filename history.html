@@ -729,6 +729,10 @@ function initializeMenuFunctions() {
     ru:'История Муринска',
     en:'Murinsk history'
     };
+    const browserTitleByLang={
+    ru:'Муринск - История города',
+    en:'Murinsk - City history'
+    };
 
     let lang=localStorage.getItem('lang')||sessionStorage.getItem('lang');
     if(lang!=='ru'&&lang!=='en'){
@@ -817,6 +821,7 @@ function initializeMenuFunctions() {
     langBtn.textContent=lang.toUpperCase();
     document.querySelectorAll('[data-ru]').forEach(e=>e.style.display=lang==='ru'?'block':'none');
     document.querySelectorAll('[data-en]').forEach(e=>e.style.display=lang==='en'?'block':'none');
+    document.title=browserTitleByLang[lang]||browserTitleByLang.ru;
     setPageTitle();
     }
     langBtn.onclick=()=>{
