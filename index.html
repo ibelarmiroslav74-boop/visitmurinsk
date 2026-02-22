@@ -585,6 +585,26 @@ color:var(--sub)
         color: var(--sub);
         line-height: 1.7;
     }
+
+    .reveal-on-scroll {
+        opacity: 0;
+        transform: translate3d(0, 22px, 0);
+        transition: opacity .55s ease, transform .55s ease;
+    }
+
+    .reveal-on-scroll.is-visible {
+        opacity: 1;
+        transform: translate3d(0, 0, 0);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .reveal-on-scroll,
+        .reveal-on-scroll.is-visible {
+            opacity: 1;
+            transform: none;
+            transition: none;
+        }
+    }
 </style>
 
 <div class="parallax-wrapper">
@@ -916,12 +936,39 @@ heroTypingIsMobile=event.matches;
 runHeroTypingAnimation();
 }
 
+function initContentRevealAnimation(){
+const revealNodes=document.querySelectorAll('.content-point, .quick-links a, .gallery-grid figure');
+if(!revealNodes.length){
+return;
+}
+if(prefersReducedMotion.matches||typeof IntersectionObserver!=='function'){
+revealNodes.forEach(node=>node.classList.add('is-visible'));
+return;
+}
+
+const revealObserver=new IntersectionObserver(entries=>{
+entries.forEach(entry=>{
+if(entry.isIntersecting){
+entry.target.classList.add('is-visible');
+revealObserver.unobserve(entry.target);
+}
+});
+},{threshold:.14,rootMargin:'0px 0px -10% 0px'});
+
+revealNodes.forEach((node,index)=>{
+node.classList.add('reveal-on-scroll');
+node.style.transitionDelay=`${Math.min(index*60,260)}ms`;
+revealObserver.observe(node);
+});
+}
+
 if(typeof mobileHeroQuery.addEventListener==='function'){
 mobileHeroQuery.addEventListener('change',handleHeroTypingResize);
 }else if(typeof mobileHeroQuery.addListener==='function'){
 mobileHeroQuery.addListener(handleHeroTypingResize);
 }
 updateLang();
+initContentRevealAnimation();
 
 function updateParallax(){
 if(!parallaxSection||!parallaxBg){
