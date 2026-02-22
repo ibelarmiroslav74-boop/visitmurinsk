@@ -367,41 +367,19 @@ color:var(--sub)
 position:fixed;
 top:0;
 left:0;
-width:100%;
+width:0;
 height:4px;
 z-index:5000;
 pointer-events:none;
-background:linear-gradient(90deg,rgba(46,204,113,.15),rgba(0,255,153,.12));
-overflow:hidden;
+background:#2ecc71;
 opacity:1;
-transition:opacity .35s ease;
-}
-
-#site-loader-progress::before{
-content:"";
-position:absolute;
-inset:0;
-width:45%;
-transform:translateX(-120%);
-background:linear-gradient(90deg,#16c172 0%,#4cff9b 45%,#9bffce 100%);
-box-shadow:0 0 14px rgba(66,255,157,.95),0 0 24px rgba(66,255,157,.7);
-animation:siteLoaderSweep 1s cubic-bezier(.45,.03,.42,.99) infinite;
+box-shadow:0 1px 6px rgba(46,204,113,.7);
+transition:width .25s ease-out,opacity .3s ease;
 }
 
 body.site-loaded #site-loader-progress{
 opacity:0;
-}
-
-body.site-loaded #site-loader-progress::before{
-animation:none;
 width:100%;
-transform:translateX(0);
-}
-
-@keyframes siteLoaderSweep{
-0%{transform:translateX(-120%)}
-65%{transform:translateX(120%)}
-100%{transform:translateX(150%)}
 }
 
 </style>
@@ -1161,7 +1139,29 @@ const loader=document.getElementById('site-loader-progress');
 if(!loader){
 return;
 }
+
+let progress=8;
+let timer=null;
+
+function paintProgress(value){
+loader.style.width=`${Math.min(value,100)}%`;
+}
+
+paintProgress(progress);
+
+timer=setInterval(()=>{
+progress=Math.min(progress+Math.random()*12,90);
+paintProgress(progress);
+if(progress>=90){
+clearInterval(timer);
+}
+},160);
+
 function finishLoading(){
+if(timer){
+clearInterval(timer);
+}
+paintProgress(100);
 document.body.classList.add('site-loaded');
 setTimeout(()=>loader.remove(),420);
 }
