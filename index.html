@@ -360,10 +360,56 @@ color:var(--sub)
     <button id="accept-cookies">Принять</button>
 </div>
 
+
+
+/* Top loading progress */
+#site-loader-progress{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:4px;
+z-index:5000;
+pointer-events:none;
+background:linear-gradient(90deg,rgba(46,204,113,.15),rgba(0,255,153,.12));
+overflow:hidden;
+opacity:1;
+transition:opacity .35s ease;
+}
+
+#site-loader-progress::before{
+content:"";
+position:absolute;
+inset:0;
+width:45%;
+transform:translateX(-120%);
+background:linear-gradient(90deg,#16c172 0%,#4cff9b 45%,#9bffce 100%);
+box-shadow:0 0 14px rgba(66,255,157,.95),0 0 24px rgba(66,255,157,.7);
+animation:siteLoaderSweep 1s cubic-bezier(.45,.03,.42,.99) infinite;
+}
+
+body.site-loaded #site-loader-progress{
+opacity:0;
+}
+
+body.site-loaded #site-loader-progress::before{
+animation:none;
+width:100%;
+transform:translateX(0);
+}
+
+@keyframes siteLoaderSweep{
+0%{transform:translateX(-120%)}
+65%{transform:translateX(120%)}
+100%{transform:translateX(150%)}
+}
+
 </style>
 </head>
 
 <body>
+<div id="site-loader-progress" aria-hidden="true"></div>
+
 
 <header>
 <div class="header-inner">
@@ -1106,6 +1152,26 @@ if(typeof prefersReducedMotion.addEventListener==='function'){
 prefersReducedMotion.addEventListener('change',requestParallaxUpdate);
 }
 requestParallaxUpdate();
+</script>
+
+
+<script>
+(function(){
+const loader=document.getElementById('site-loader-progress');
+if(!loader){
+return;
+}
+function finishLoading(){
+document.body.classList.add('site-loaded');
+setTimeout(()=>loader.remove(),420);
+}
+if(document.readyState==='complete'){
+requestAnimationFrame(finishLoading);
+}else{
+window.addEventListener('load',finishLoading,{once:true});
+}
+setTimeout(finishLoading,4500);
+})();
 </script>
 
 </body>
