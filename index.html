@@ -466,9 +466,7 @@ transform:translateX(0);
     right: 0;
     bottom: -1px;
     height: 140px;
-    background:
-        linear-gradient(180deg, rgba(255,255,255,0) 0%, color-mix(in srgb,var(--bg) 72%,transparent) 58%, var(--bg) 100%),
-        radial-gradient(95% 75% at 50% 100%, color-mix(in srgb,var(--bg) 72%,transparent), transparent 72%);
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%, var(--bg) 100%);
     pointer-events: none;
     z-index: 2;
 }
@@ -651,6 +649,7 @@ transform:translateX(0);
         letter-spacing: .08em;
         color: color-mix(in srgb, var(--text) 8%, transparent);
         pointer-events: none;
+        display: none;
     }
 
     .style-orbit {
@@ -676,6 +675,7 @@ transform:translateX(0);
         font-size: clamp(34px, 8vw, 94px);
         color: color-mix(in srgb, var(--text) 16%, transparent);
         pointer-events: none;
+        display: none;
     }
 
     /* Вариант 3: spotlight */
@@ -693,6 +693,7 @@ transform:translateX(0);
         font-size: clamp(14px, 2vw, 26px);
         letter-spacing: .14em;
         color: color-mix(in srgb, var(--sub) 80%, transparent);
+        display: none;
     }
 
     .quick-links {
