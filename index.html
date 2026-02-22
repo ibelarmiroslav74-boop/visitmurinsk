@@ -897,7 +897,10 @@ const isDark=document.body.classList.toggle('dark');
 sessionStorage.setItem('theme',isDark?'dark':'light');
 };
 
-let lang='ru';
+let lang=sessionStorage.getItem('lang');
+if(lang!=='ru'&&lang!=='en'){
+lang='ru';
+}
 const translations={
 ru:{
 meta:{
@@ -960,6 +963,7 @@ runHeroTypingAnimation();
 }
 langBtn.onclick=()=>{
 lang=lang==='ru'?'en':'ru';
+sessionStorage.setItem('lang',lang);
 langBtn.animate(
 [{transform:'scale(1)'},{transform:'scale(1.15)'},{transform:'scale(1)'}],
 {duration:200}
