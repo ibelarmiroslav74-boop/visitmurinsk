@@ -257,6 +257,7 @@ overflow:hidden;
 margin:0;
 padding:0;
 max-width:none;
+position:relative;
 }
 .gallery-parallax{
 position:relative;
@@ -269,6 +270,19 @@ overflow:hidden;
 display:flex;
 align-items:center;
 justify-content:center;
+}
+.gallery-parallax::after{
+content:"";
+position:absolute;
+left:0;
+right:0;
+bottom:-1px;
+height:140px;
+background:
+linear-gradient(180deg,rgba(255,255,255,0) 0%,color-mix(in srgb,var(--bg) 72%,transparent) 58%,var(--bg) 100%),
+radial-gradient(95% 75% at 50% 100%,color-mix(in srgb,var(--glass-pill-highlight) 45%,transparent),transparent 72%);
+pointer-events:none;
+z-index:2;
 }
 .gallery-parallax-bg{
 position:absolute;
