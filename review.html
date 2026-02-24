@@ -37,8 +37,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700&display=swap" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Unbounded:wght@600;700&display=swap" rel="stylesheet">
 
 <style>
 :root{
@@ -565,6 +564,16 @@ transform:translateX(0);
 100%{transform:translateX(150%)}
 }
 
+
+.facts-grid,
+.social-wrap,
+.photo-wrap,
+.external-wrap,
+.page-content,
+.gallery-content-section{
+content-visibility:auto;
+contain-intrinsic-size:1px 900px;
+}
 </style>
 </head>
 
@@ -654,17 +663,48 @@ Write a short note or a long story — every detail matters: street music, squar
 
 <!-- ИЗМЕНЕНИЕ 2: Добавляем новый скрипт внизу и оборачиваем старый в функцию -->
 <script>
-// НОВЫЙ код: Загружает menu.html и запускает функции после загрузки
-fetch('menu.html')
-    .then(response => response.text())
-    .then(html => {
-        document.getElementById('menu-container').innerHTML = html;
-        initializeMenuFunctions(); // Запускаем ваши скрипты
-    });
+(async function loadMenu(){
+const menuContainer=document.getElementById('menu-container');
+const menuCacheKey='murinsk-menu-cache-v1';
+const cachedMenu=localStorage.getItem(menuCacheKey);
+
+if(cachedMenu){
+menuContainer.innerHTML=cachedMenu;
+initializeMenuFunctions();
+}
+
+try{
+const response=await fetch('menu.html',{cache:'force-cache'});
+if(!response.ok){
+throw new Error(`Menu request failed with status ${response.status}`);
+}
+const html=await response.text();
+if(html&&html!==cachedMenu){
+localStorage.setItem(menuCacheKey,html);
+if(menuContainer.innerHTML!==html){
+menuContainer.innerHTML=html;
+window.__menuInitialized=false;
+initializeMenuFunctions();
+}
+}
+if(!cachedMenu&&!menuContainer.innerHTML.trim()){
+menuContainer.innerHTML=html;
+initializeMenuFunctions();
+}
+}catch(error){
+if(!cachedMenu){
+console.error('Не удалось загрузить меню',error);
+}
+}
+})();
 
 
 // ВАШ СТАРЫЙ СКРИПТ (теперь внутри функции)
 function initializeMenuFunctions() {
+if(window.__menuInitialized){
+return;
+}
+window.__menuInitialized=true;
     const menuBtn=document.getElementById('menuBtn');
     const menu=document.getElementById('menu');
     const themeBtn=document.getElementById('themeBtn');
