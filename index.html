@@ -316,6 +316,15 @@ transform:translateY(-12px);
 transition:
 opacity .35s ease,
 transform .45s cubic-bezier(.4,0,.2,1);
+display:inline-flex;
+align-items:center;
+justify-content:center;
+gap:8px;
+}
+nav a.active::after{
+content:"✓";
+font-size:12px;
+line-height:1;
 }
 nav a.active{
 text-decoration:underline;
