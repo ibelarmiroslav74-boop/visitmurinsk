@@ -1,12 +1,25 @@
-<style>details > summary::-webkit-details-marker{display:none;} details > summary{list-style:none;}</style>
+<style>
+details > summary::-webkit-details-marker{display:none;}
+details > summary{list-style:none;}
+summary::marker{content:"";}
+.brand-group{display:flex;align-items:center;gap:8px;position:relative;z-index:3;flex-shrink:0;}
+.suburb-switch{position:relative;}
+.suburb-switch summary{list-style:none;cursor:pointer;user-select:none;font-family:'Unbounded',sans-serif;font-size:12px;line-height:1;color:inherit;border:1px solid color-mix(in srgb,var(--control-border) 70%,transparent);background:color-mix(in srgb,var(--control-bg) 82%,transparent);width:24px;height:24px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px var(--shadow);}
+.suburb-menu{position:absolute;top:30px;left:0;min-width:150px;padding:8px;border-radius:12px;border:1px solid var(--menu-border);background:var(--menu);backdrop-filter:blur(14px) saturate(135%);-webkit-backdrop-filter:blur(14px) saturate(135%);box-shadow:0 10px 24px var(--shadow);}
+.suburb-menu a{display:block;text-decoration:none;color:inherit;font-size:12px;padding:8px 10px;border-radius:8px;font-family:'Unbounded',sans-serif;}
+@media (max-width:560px){
+.brand-group{gap:6px;}
+.suburb-switch summary{width:22px;height:22px;}
+}
+</style>
 <!-- Содержимое файла menu.html -->
 <div class="header-inner">
-<div style="display:flex;align-items:center;gap:8px;position:relative;z-index:3;">
+<div class="brand-group">
 <a class="logo" href="/index.html" style="text-decoration:none;color:inherit;">Murinsk</a>
-<details style="position:relative;">
-<summary aria-label="Открыть ссылки" style="list-style:none;cursor:pointer;user-select:none;font-family:'Unbounded',sans-serif;font-size:12px;line-height:1;color:inherit;border:1px solid color-mix(in srgb,var(--control-border) 70%,transparent);background:color-mix(in srgb,var(--control-bg) 82%,transparent);width:24px;height:24px;border-radius:999px;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 18px var(--shadow);">▾</summary>
-<div style="position:absolute;top:30px;left:0;min-width:150px;padding:8px;border-radius:12px;border:1px solid var(--menu-border);background:var(--menu);backdrop-filter:blur(14px) saturate(135%);-webkit-backdrop-filter:blur(14px) saturate(135%);box-shadow:0 10px 24px var(--shadow);">
-<a href="https://suburb.visitmurinsk.ru" target="_blank" rel="noopener noreferrer" style="display:block;text-decoration:none;color:inherit;font-size:12px;padding:8px 10px;border-radius:8px;font-family:'Unbounded',sans-serif;">Пригород</a>
+<details class="suburb-switch">
+<summary aria-label="Открыть ссылки">▾</summary>
+<div class="suburb-menu">
+<a href="https://suburb.visitmurinsk.ru" target="_blank" rel="noopener noreferrer">Пригород</a>
 </div>
 </details>
 </div>
