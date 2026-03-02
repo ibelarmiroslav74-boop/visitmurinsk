@@ -1,10 +1,56 @@
 <style>
 .brand-group{display:flex;align-items:center;position:relative;z-index:3;flex-shrink:0;}
+.suburb-toggle{position:static;margin-left:10px;}
+.suburb-toggle summary{
+list-style:none;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+user-select:none;
+background:none;
+border:0;
+padding:2px 0;
+line-height:1;
+}
+.suburb-toggle summary::-webkit-details-marker{display:none;}
+.suburb-toggle summary svg{
+width:16px;
+height:11px;
+display:block;
+}
+.suburb-toggle summary path{
+fill:none;
+stroke:currentColor;
+stroke-width:2.2;
+stroke-linecap:round;
+stroke-linejoin:round;
+}
+.suburb-popup{
+position:absolute;
+top:calc(100% + 10px);
+left:26px;
+padding:10px 14px;
+border-radius:12px;
+border:1px solid var(--menu-border);
+background:linear-gradient(160deg,color-mix(in srgb,var(--menu) 88%,white 12%),color-mix(in srgb,var(--menu) 94%,transparent));
+box-shadow:0 14px 30px var(--shadow), inset 0 1px 0 var(--menu-highlight);
+font-size:10px;
+white-space:nowrap;
+}
 </style>
 <!-- Содержимое файла menu.html -->
 <div class="header-inner">
 <div class="brand-group">
 <a class="logo" href="https://visitmurinsk.ru/" style="text-decoration:none;color:inherit;">Murinsk</a>
+<details class="suburb-toggle">
+    <summary aria-label="Показать пригород">
+        <svg viewBox="0 0 18 12" aria-hidden="true" focusable="false">
+            <path d="M1 2.5 L9 9 L17 2.5"/>
+        </svg>
+    </summary>
+    <div class="suburb-popup">пригород</div>
+</details>
 </div>
 
 <div class="controls">
