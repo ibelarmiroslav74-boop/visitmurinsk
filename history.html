@@ -717,7 +717,7 @@ contain-intrinsic-size:1px 900px;
 <script>
 (async function loadMenu(){
 const menuContainer=document.getElementById('menu-container');
-const menuCacheKey='murinsk-menu-cache-v1';
+const menuCacheKey='murinsk-menu-cache-v2';
 const cachedMenu=localStorage.getItem(menuCacheKey);
 
 if(cachedMenu){
@@ -726,7 +726,7 @@ initializeMenuFunctions();
 }
 
 try{
-const response=await fetch('menu.html',{cache:'force-cache'});
+const response=await fetch(`menu.html?v=2`,{cache:'no-store'});
 if(!response.ok){
 throw new Error(`Menu request failed with status ${response.status}`);
 }
