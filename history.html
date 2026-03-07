@@ -461,8 +461,8 @@ background:color-mix(in srgb,var(--sub) 30%,transparent);
 position:relative;
 padding:22px;
 border:1px solid color-mix(in srgb,var(--glass-pill-border) 70%,transparent);
-background:linear-gradient(155deg,color-mix(in srgb,var(--glass) 82%,white 18%),color-mix(in srgb,var(--glass) 92%,transparent));
-box-shadow:0 12px 28px var(--shadow), inset 0 1px 0 var(--glass-pill-highlight);
+background:color-mix(in srgb,var(--bg) 92%,var(--text) 8%);
+box-shadow:0 12px 28px var(--shadow);
 border-radius:22px;
 }
 .timeline-item::before{
@@ -618,7 +618,7 @@ contain-intrinsic-size:1px 900px;
 <p class="page-lead" data-en>Below is an extended history-page template: each block already includes a year, a photo, and multiple text paragraphs. You can continue the story by adding new milestones without changing the structure.</p>
 
 <div class="timeline" data-reveal>
-  <article class="timeline-item" data-reveal>
+  <article class="timeline-item">
     <h3 class="timeline-year">2019 — Основание</h3>
     <figure class="timeline-photo">
       <img src="IMG_3823.png" alt="Первый квартал Муринска" loading="eager" fetchpriority="high" decoding="async">
