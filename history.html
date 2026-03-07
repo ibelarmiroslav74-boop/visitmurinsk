@@ -633,7 +633,7 @@ contain-intrinsic-size:1px 900px;
     </div>
   </article>
 
-  <article class="timeline-item" data-reveal>
+  <article class="timeline-item">
     <h3 class="timeline-year">2020 — Дороги и районы</h3>
     <figure class="timeline-photo">
       <img src="IMG_3824.png" alt="Формирование дорожной сети" loading="lazy" decoding="async">
@@ -889,6 +889,12 @@ window.__menuInitialized=true;
     node.style.transitionDelay=`${Math.min(index*70,320)}ms`;
     });
 
+    revealNodes.forEach((node,index)=>{
+    if(index<2){
+    node.classList.add('is-visible');
+    }
+    });
+
     if(prefersReducedMotion.matches||typeof IntersectionObserver!=='function'){
     revealNodes.forEach(node=>node.classList.add('is-visible'));
     return;
@@ -903,7 +909,12 @@ window.__menuInitialized=true;
     });
     },{threshold:.15,rootMargin:'0px 0px -10% 0px'});
 
-    revealNodes.forEach(node=>revealObserver.observe(node));
+    revealNodes.forEach((node,index)=>{
+    if(index<2){
+    return;
+    }
+    revealObserver.observe(node);
+    });
     }
 
     function updateLang(){
