@@ -163,6 +163,32 @@ button:active{
 transform:translateY(0) scale(.97);
 }
 
+
+@supports not (color: color-mix(in srgb, black, white)) {
+.header-inner{
+background:var(--glass-pill);
+}
+.header-inner::before{display:none;}
+button{
+border:1px solid var(--control-border);
+background:var(--control-bg);
+}
+button:hover{
+background:var(--control-bg);
+border-color:var(--control-border);
+}
+.menu{background:var(--menu);}
+.glass-card,
+.quick-links a,
+.gallery-grid figure,
+.fact-card,
+.social-card,
+.photo-grid figure,
+.external-links a{
+background:var(--glass);
+}
+}
+
 #langBtn{
 font-family:'Unbounded',sans-serif;
 width:44px;height:36px;
