@@ -711,7 +711,7 @@ Write a short note or a long story — every detail matters: street music, squar
 <script>
 (async function loadMenu(){
 const menuContainer=document.getElementById('menu-container');
-const menuCacheKey='murinsk-menu-cache-v1';
+const menuCacheKey='murinsk-menu-cache-v3';
 const cachedMenu=localStorage.getItem(menuCacheKey);
 
 if(cachedMenu){
@@ -720,7 +720,7 @@ initializeMenuFunctions();
 }
 
 try{
-const response=await fetch('menu.html',{cache:'force-cache'});
+const response=await fetch('menu.html',{cache:'reload'});
 if(!response.ok){
 throw new Error(`Menu request failed with status ${response.status}`);
 }
