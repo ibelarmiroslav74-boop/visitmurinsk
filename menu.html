@@ -20,6 +20,50 @@ backdrop-filter:url(#displacementFilter) blur(2px);
 }
 
 .brand-group{display:flex;align-items:center;position:relative;z-index:3;flex-shrink:0;}
+.controls button{
+width:38px;
+height:38px;
+border-radius:999px;
+border:1px solid color-mix(in srgb,var(--control-border) 74%,transparent);
+background:linear-gradient(160deg,color-mix(in srgb,var(--control-bg) 88%,white 12%),color-mix(in srgb,var(--control-bg) 94%,transparent));
+color:var(--text);
+box-shadow:0 12px 28px var(--shadow), inset 0 1px 0 var(--control-highlight);
+position:relative;
+overflow:hidden;
+transition:transform .22s ease,box-shadow .25s ease,background-color .25s ease,border-color .25s ease;
+}
+.controls button::before{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(118deg,transparent 20%,color-mix(in srgb,var(--control-highlight) 88%,transparent) 50%,transparent 82%);
+opacity:.6;
+pointer-events:none;
+mix-blend-mode:screen;
+}
+.controls button:hover{
+transform:translateY(-1px);
+border-color:color-mix(in srgb,var(--control-border) 88%,transparent);
+box-shadow:0 14px 30px var(--shadow), inset 0 1px 0 var(--control-highlight);
+}
+.controls button:active{
+transform:translateY(0) scale(.96);
+}
+#langBtn{
+width:46px;
+font-family:'Unbounded',sans-serif;
+font-size:12px;
+}
+#menuBtn span{z-index:1;}
+
+@supports not (color: color-mix(in srgb, black, white)) {
+.controls button{
+background:var(--control-bg);
+border-color:var(--control-border);
+}
+.controls button::before{display:none;}
+}
+
 .suburb-toggle{position:relative;margin-left:10px;}
 .suburb-toggle summary{
 list-style:none;
